@@ -1,0 +1,383 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>Android中的strings.xml详解 | cnLGMing&#39; Blog</title>
+  <meta name="author" content="刘广明">
+  
+  <meta name="description" content="这篇博客是学习完 strings 带数量词、带参数的用法后所写。如有不妥之处，欢迎留言，谢谢~">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <meta property="og:title" content="Android中的strings.xml详解"/>
+  <meta property="og:site_name" content="cnLGMing&#39; Blog"/>
+
+  
+    <meta property="og:image" content="undefined"/>
+  
+
+  
+  
+    <link href="/favicon.png" rel="icon">
+  
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="/css/themes/bootstrap.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/font-awesome.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/responsive.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/highlight.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/google-fonts.css" media="screen" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+
+  <script src="/js/jquery-2.0.3.min.js"></script>
+
+  <!-- analytics -->
+  
+
+
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?1d8758dd8ddd40e2535e3c3079a729ac";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+</head>
+
+ <body>  
+  <nav id="main-nav" class="navbar navbar-inverse navbar-default navbar-fixed-top" role="navigation">
+    <div class="container">
+      <button type="button" class="navbar-header navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+	<span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+       <a class="navbar-brand" href="/">cnLGMing&#39; Blog</a>
+      <div class="collapse navbar-collapse nav-menu">
+		<ul class="nav navbar-nav">
+		  
+		  <li>
+			<a href="/archives" title="全部文章">
+			  <i class="fa fa-archive"></i>归档
+			</a>
+		  </li>
+		  
+		  <li>
+			<a href="/categories" title="全部分类">
+			  <i class="fa fa-folder"></i>分类
+			</a>
+		  </li>
+		  
+		  <li>
+			<a href="/tags" title="全部标签">
+			  <i class="fa fa-tags"></i>标签
+			</a>
+		  </li>
+		  
+		  <li>
+			<a href="/about" title="关于我">
+			  <i class="fa fa-user"></i>关于我
+			</a>
+		  </li>
+		  
+		</ul>
+      </div>
+    </div> <!-- container -->
+</nav>
+<div class="clearfix"></div>
+
+  <div class="container">
+  	<div class="content">
+    	 
+
+
+	
+		<div class="page-header page-header-inverse ">		
+			<h1 class="title title-inverse "> Android中的strings.xml详解</h1>
+		</div>		
+	
+
+
+
+
+
+
+<div class="row post">
+	<!-- cols -->
+	
+	<div id="top_meta"></div>
+	<div class="col-md-9">
+	
+
+	<!-- content -->
+	<div class="mypage">		
+	  
+		 <div class="alert alert-success description">
+			<i class="fa fa-info-circle"></i> <p>这篇博客是学习完 strings 带数量词、带参数的用法后所写。如有不妥之处，欢迎留言，谢谢~</p>
+			
+		 </div> <!-- alert -->
+	  		
+
+	  <p>Android 为了让 APP 国际化（更好的在不同语言环境中使用），同时为了方便开发者进行适配多语言，提供了 strings.xml ，并建议开发者在 UI 界面相关的使用到的文本使用 strings.xml ，进行统一处理。尽量避免采用硬编码。strings.xml 除了为了多语言适配，还有其他一些重要的作用。</p>
+<a id="more"></a>
+<h3 id="基本使用方法"><a href="#基本使用方法" class="headerlink" title="基本使用方法"></a>基本使用方法</h3><p>基本使用的方法，相信在初学 Android 时，就学过，也比较基础，那我在这就一笔带过了。</p>
+<p><strong>例如：</strong>需要在界面中显示中文 <strong>“你有多少篇文章？”</strong> </p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="comment">&lt;!--在 values 的 strings.xml 中的设置--&gt;</span></div><div class="line"> <span class="tag">&lt;<span class="name">string</span> <span class="attr">name</span>=<span class="string">"article_total"</span>&gt;</span>你有多少篇文章？<span class="tag">&lt;/<span class="name">string</span>&gt;</span></div></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// 在 java 代码中通过以下代码获取</span></div><div class="line">getResources().getString(R.string.article_total);</div></pre></td></tr></table></figure>
+<hr>
+<h3 id="国际化（多语言适配）"><a href="#国际化（多语言适配）" class="headerlink" title="国际化（多语言适配）"></a>国际化（多语言适配）</h3><p>现在来说下多语言适配，为了演示，这里只适配英语，其他语言相似。</p>
+<p>首先，需要在项目的 <code>res</code> 目录创建适配英语的 values 文件夹，在 Android Studio 中，可以通过以下方式快速创建。</p>
+<p><strong>第一步：</strong></p>
+<p><img src="https://ooo.0o0.ooo/2016/06/13/575eccbdead81.png" alt="1.png"></p>
+<p><strong>第二步：</strong></p>
+<p><img src="https://ooo.0o0.ooo/2016/06/13/575eccbc748e8.png" alt="2.png"></p>
+<p>当完成上面两个步骤后，在 <code>res</code> 目录下，会生成 <code>values-en</code> 以及 <code>strings.xml</code> （还带国旗，是不是很有心）。</p>
+<p><strong>效果图：</strong></p>
+<p><img src="https://ooo.0o0.ooo/2016/06/13/575eccbc1567f.png" alt="3.png"></p>
+<p><strong>例如：</strong></p>
+<p>当需要在中文环境下时，显示 <strong>“你有多少篇文章？”</strong> ；</p>
+<p>在英语环境时，显示 <strong>“How many articles do you have ?”</strong></p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="comment">&lt;!--在 values 的 strings.xml 中的设置--&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">string</span> <span class="attr">name</span>=<span class="string">"article_total"</span>&gt;</span>你有多少篇文章？<span class="tag">&lt;/<span class="name">string</span>&gt;</span></div><div class="line"></div><div class="line"><span class="comment">&lt;!--在 values-en 的 strings.xml 中的设置--&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">string</span> <span class="attr">name</span>=<span class="string">"article_total"</span>&gt;</span>How many articles do you have ?<span class="tag">&lt;/<span class="name">string</span>&gt;</span></div></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// 在 java 代码中通过以下代码获取</span></div><div class="line">getResources().getString(R.string.article_total);</div></pre></td></tr></table></figure>
+<p><strong>wiki：</strong></p>
+<ol>
+<li>在进行多语言适配时，不同 values 中的同一字符串需要设置<strong>相同的 name</strong>；</li>
+<li>Android 会自动根据语言环境加载不同的 strings.xml；</li>
+<li>若没有找到对应的语言适配的 values 时，系统将加载默认 values 中的 strings.xml</li>
+</ol>
+<hr>
+<h3 id="带参数"><a href="#带参数" class="headerlink" title="带参数"></a>带参数</h3><p>有时字符串会有一部门是相同的，变化的的总是在固定的位置，那么此时，我们可以使用带参数的方法进行配置。</p>
+<p>例如：针对上面的<strong>“你有多少篇文章？”</strong>，进行回答：<strong>“我有一篇文章。”</strong> 、<strong>“我有两篇文章。”</strong></p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="comment">&lt;!--在 values 的 strings.xml 中的设置--&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">string</span> <span class="attr">name</span>=<span class="string">"my_article_total"</span>&gt;</span>我有%s篇文章。<span class="tag">&lt;/<span class="name">string</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">string</span> <span class="attr">name</span>=<span class="string">"my_article_total_ing"</span>&gt;</span>我有%1$s篇文章，正在写第%2$s篇。<span class="tag">&lt;/<span class="name">string</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">string</span> <span class="attr">name</span>=<span class="string">"one"</span>&gt;</span>一<span class="tag">&lt;/<span class="name">string</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">string</span> <span class="attr">name</span>=<span class="string">"two"</span>&gt;</span>二<span class="tag">&lt;/<span class="name">string</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">string</span> <span class="attr">name</span>=<span class="string">"three"</span>&gt;</span>三<span class="tag">&lt;/<span class="name">string</span>&gt;</span></div><div class="line"></div><div class="line"><span class="comment">&lt;!--在 values-en 的 strings.xml 中的设置--&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">string</span> <span class="attr">name</span>=<span class="string">"my_article_total"</span>&gt;</span>I have %s article.<span class="tag">&lt;/<span class="name">string</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">string</span> <span class="attr">name</span>=<span class="string">"my_article_total_ing"</span>&gt;</span>I have %1$s article. I'm writing %2$s.<span class="tag">&lt;/<span class="name">string</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">string</span> <span class="attr">name</span>=<span class="string">"one"</span>&gt;</span>one<span class="tag">&lt;/<span class="name">string</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">string</span> <span class="attr">name</span>=<span class="string">"two"</span>&gt;</span>two<span class="tag">&lt;/<span class="name">string</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">string</span> <span class="attr">name</span>=<span class="string">"three"</span>&gt;</span>the third<span class="tag">&lt;/<span class="name">string</span>&gt;</span></div></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// 在 java 代码中通过以下代码进行获取</span></div><div class="line">getResources().getString(R.string.my_article_total, getString(R.string.one));</div><div class="line">getResources().getString(R.string.my_article_total, getString(R.string.two));</div><div class="line">getResources().getString(R.string.my_article_total_ing, getString(R.string.two), getString(R.string.three));</div></pre></td></tr></table></figure>
+<p><strong>效果图：</strong></p>
+<p><img src="https://ooo.0o0.ooo/2016/06/18/576577bf789d3.gif" alt="GIF.gif"></p>
+<p><strong>wiki：</strong></p>
+<ol>
+<li>其中 <code>%s</code>  表示字符串，若只有一个参数时，直接使用 <code>%s</code>  即可；若有两个及两个以上时，需要使用编号进行区分，将 <code>%s 修改为 %编号$s</code> ，然后在 java 代码在中，按照编号进行设置即可。</li>
+<li>更多参数格式，请参考 <a href="https://developer.android.com/reference/java/util/Formatter.html" target="_blank" rel="external">Formatter的使用方法</a>，</li>
+</ol>
+<hr>
+<h3 id="根据数量，是否为复数，添加-String"><a href="#根据数量，是否为复数，添加-String" class="headerlink" title="根据数量，是否为复数，添加 String"></a>根据数量，是否为复数，添加 String</h3><p>不知道你有没有注意到，当在英文状态下，且数量为复数时，其英语单词还是单数形式，这是不对的。那么需要怎么写呢？接下来，我们就来学习当参数为数量，且需要根据这个参数是单数还是复数，显示对应的单词。</p>
+<p>要适配多种语言的复数是比较困难的一件事，所以 Android 已经提供了对应的方法 –&gt; <code>plurals</code> ，使用方法如下：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="comment">&lt;!--在 values 的 strings.xml 中的设置--&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">plurals</span> <span class="attr">name</span>=<span class="string">"article_count"</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">item</span> <span class="attr">quantity</span>=<span class="string">"one"</span>&gt;</span>我有 1 篇文章。<span class="tag">&lt;/<span class="name">item</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">item</span> <span class="attr">quantity</span>=<span class="string">"other"</span>&gt;</span>我有 %d 篇文章。<span class="tag">&lt;/<span class="name">item</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">plurals</span>&gt;</span></div><div class="line"></div><div class="line"><span class="comment">&lt;!--在 values-en 的 strings.xml 中的设置--&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">plurals</span> <span class="attr">name</span>=<span class="string">"article_count"</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">item</span> <span class="attr">quantity</span>=<span class="string">"one"</span>&gt;</span>I have only one article.<span class="tag">&lt;/<span class="name">item</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">item</span> <span class="attr">quantity</span>=<span class="string">"other"</span>&gt;</span>I have %d articles.<span class="tag">&lt;/<span class="name">item</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">plurals</span>&gt;</span></div></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// 在 java 代码中通过以下代码进行获取</span></div><div class="line"><span class="keyword">int</span> count = <span class="number">1</span>;</div><div class="line">getResources().getQuantityString(R.plurals.article_count, count, count);</div><div class="line">count = <span class="number">100</span>;</div><div class="line">getResources().getQuantityString(R.plurals.article_count, count, count);</div></pre></td></tr></table></figure>
+<p><strong>效果图：</strong></p>
+<p><img src="https://ooo.0o0.ooo/2016/06/20/5768ab11ba12c.gif" alt="GIF.gif"></p>
+<p><strong>wiki：</strong></p>
+<ol>
+<li>通过 <a href="https://developer.android.com/guide/topics/resources/string-resource.html#Plurals" target="_blank" rel="external">Android提供的API</a> 可以发现，语言之间的复数是有差异，而且很容易搞混。<code>quantity</code> 中各合法值的解释：<br><img src="https://ooo.0o0.ooo/2016/06/20/5768adb4592bc.png" alt="1.png"></li>
+<li>当 <code>item</code> 中有单引号或双引号时，需要进行转义；</li>
+<li>当 <code>item</code> 中，包含了数字格式的字符串 <code>%d</code> ,则在获取时需要传递两个参数，如上面的两个 <strong>count</strong> ，第一个 count 用于显示合适的字符串；第二个 count 用于插入到占位符 <code>%d</code> 中。</li>
+</ol>
+<hr>
+<h3 id="添加特殊符号"><a href="#添加特殊符号" class="headerlink" title="添加特殊符号"></a>添加特殊符号</h3><p>在 <strong>strings.xml</strong> 中，有些字符是不能直接表示出来的。比如：空格。</p>
+<p>那么需要的时候怎么使用呢？<strong>使用ASCII 码表示</strong> 。</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">string</span> <span class="attr">name</span>=<span class="string">"space01"</span>&gt;</span> 测试空格 <span class="tag">&lt;/<span class="name">string</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">string</span> <span class="attr">name</span>=<span class="string">"space02"</span>&gt;</span>&amp;#160;测试空格&amp;#160;<span class="tag">&lt;/<span class="name">string</span>&gt;</span></div></pre></td></tr></table></figure>
+<p><strong>效果图：</strong></p>
+<p><img src="https://ooo.0o0.ooo/2016/06/21/5768dfa81d544.png" alt=""></p>
+<p><strong>wiki：</strong></p>
+<ol>
+<li>当不能直接表示出来时，使用 <strong>ASCII 码</strong> 进行表示。格式：<code>&amp;#ASCII码;</code></li>
+</ol>
+<hr>
+<h3 id="使用-HTML-样式"><a href="#使用-HTML-样式" class="headerlink" title="使用 HTML 样式"></a>使用 HTML 样式</h3><p>在某种特定的场景，我们需要强调一些关键字/词，需要进行加粗或颜色修改等操作。这个时候，为了减少控件，使这句话就在同一个 string 中，我们可以使用 HTML 样式对字符串进行修饰。</p>
+<ul>
+<li>需要显示：<strong><u><em>刘广明</em></u></strong>，下午好！</li>
+</ul>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">string</span> <span class="attr">name</span>=<span class="string">"hello"</span>&gt;</span><span class="tag">&lt;<span class="name">u</span>&gt;</span><span class="tag">&lt;<span class="name">i</span>&gt;</span><span class="tag">&lt;<span class="name">b</span>&gt;</span>刘广明<span class="tag">&lt;/<span class="name">b</span>&gt;</span><span class="tag">&lt;/<span class="name">i</span>&gt;</span><span class="tag">&lt;/<span class="name">u</span>&gt;</span>, 下午好<span class="tag">&lt;/<span class="name">string</span>&gt;</span></div></pre></td></tr></table></figure>
+<p>效果图：</p>
+<p><img src="https://ooo.0o0.ooo/2016/06/21/5768e42f8e40a.png" alt=""></p>
+<ul>
+<li>修改颜色（有两种方法）</li>
+</ul>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">// 第一种方法：在 Java 代码中直接设置</div><div class="line">mTvHello.setText(Html.fromHtml("<span class="tag">&lt;<span class="name">font</span> <span class="attr">color</span>=<span class="string">'#00ff00'</span>&gt;</span>刘广明<span class="tag">&lt;/<span class="name">font</span>&gt;</span>,下午好！"));</div><div class="line"></div><div class="line">// 第二种方法</div><div class="line"><span class="comment">&lt;!-- 在 strings.xml 中配置 --&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">string</span> <span class="attr">name</span>=<span class="string">"hello"</span>&gt;</span></div><div class="line">    &lt;![CDATA[</div><div class="line">        &lt;font color="#0066ff"&gt;&lt;b&gt;刘广明&lt;/b&gt;&lt;/font&gt;</div><div class="line">    ]]&gt;，下午好</div><div class="line"><span class="tag">&lt;/<span class="name">string</span>&gt;</span></div><div class="line"></div><div class="line">// 在 Java 代码中获取：</div><div class="line">mTvHello.setText(Html.fromHtml(getResources().getString(R.string.hello)));</div></pre></td></tr></table></figure>
+<p><strong>效果图：</strong></p>
+<p><img src="https://ooo.0o0.ooo/2016/06/21/5768ee79139c5.png" alt=""></p>
+<p><strong>wiki：</strong></p>
+<ol>
+<li>目前 <code>strings.xml</code> 自带的支持：加粗<code>&lt;b&gt;</code>、下划线<code>&lt;u&gt;</code>、斜体<code>&lt;i&gt;</code>这三个标签</li>
+</ol>
+<hr>
+<blockquote>
+<p><strong>作者简介</strong>：</p>
+<p><strong>刘广明</strong>(<a href="http://weibo.com/u/1665380350" target="_blank" rel="external">@ cnLGMing</a>)，一步一步往上爬。</p>
+<p><a href="http://www.liuguangmingcn.com/" target="_blank" rel="external">个人博客</a> 、<a href="https://github.com/ cnLGMing" target="_blank" rel="external">GitHub</a> 、<a href="https://www.zhihu.com/people/LGMing" target="_blank" rel="external">知乎</a></p>
+<p><strong>文章若有不对之处，欢迎指正，谢谢~</strong></p>
+<p><strong>版权声明：原创作品，转载时请务必注明原始出处。</strong></p>
+</blockquote>
+	  
+	</div>
+
+	<div>
+  	<center>
+	<div class="pagination">
+<ul class="pagination">
+	 
+				
+    	<li class="prev"><a href="/2016/06/10/Material_Design_设计语言/" class="alignleft prev"><i class="fa fa-arrow-circle-o-left"></i>上一页</a></li>
+  		
+
+        <li><a href="/archives"><i class="fa fa-archive"></i>Archive</a></li>
+
+		
+		   <li class="next"><a href="/2016/05/16/APP版本升级及常见的一些问题/" class="alignright next">下一页<i class="fa fa-arrow-circle-o-right"></i></a></li>         
+        
+	
+</ul>
+</div>
+
+    </center>
+	</div>
+
+    <!-- share -->
+    
+        
+    <div class="bdsharebuttonbox">
+        <a href="#" class="bds_more" data-cmd="more"></a>
+        <a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信"></a>
+        <a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
+        <a href="#" class="bds_fbook" data-cmd="fbook" title="分享到Facebook"></a>
+        <a href="#" class="bds_twi" data-cmd="twi" title="分享到Twitter"></a>
+        <a href="#" class="bds_linkedin" data-cmd="linkedin" title="分享到linkedin"></a>
+        <a href="#" class="bds_evernotecn" data-cmd="evernotecn" title="分享到印象笔记"></a>
+        <a href="#" class="bds_youdao" data-cmd="youdao" title="分享到有道云笔记"></a>
+        <a href="#" class="bds_copy" data-cmd="copy" title="分享到复制网址"></a>
+    </div>
+    <script>
+        window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"1","bdSize":"24"},"share":{}};
+        with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+    </script>
+
+
+        
+
+    
+	
+	<!-- comment -->
+	
+<section id="comment">
+  <h2 class="title">留言</h2>
+
+  
+  	 <div class="ds-thread" data-thread-key="2016/06/03/Android中的strings.xml详解/" data-title="Android中的strings.xml详解" data-url="http://yoursite.com/2016/06/03/Android中的strings.xml详解/"></div>  
+  
+</section>
+
+	</div> <!-- col-md-9/col-md-12 -->
+		
+	
+	<div id="side_meta">
+		<div class="col-md-3" id="post_meta"> 
+
+	<!-- date -->
+	
+	<div class="meta-widget">
+	<i class="fa fa-clock-o"></i>
+	2016-06-03 
+	</div>
+	
+
+	<!-- categories -->
+    
+	<div class="meta-widget">
+	<a data-toggle="collapse" data-target="#categorys"><i class="fa fa-folder"></i></a>	
+    <ul id="categorys" class="tag_box list-unstyled collapse in">
+          
+  <li>
+    <li><a href="/categories/Android基础/">Android基础<span>2</span></a></li>
+  </li>
+
+    </ul>
+	</div>
+	
+
+	<!-- tags -->
+	
+	<div class="meta-widget">
+	<a data-toggle="collapse" data-target="#tags"><i class="fa fa-tags"></i></a>		  
+    <ul id="tags" class="tag_box list-unstyled collapse in">	  
+	    
+  <li><a href="/tags/res/">res<span>1</span></a></li>
+    </ul>
+	</div>
+		
+
+	<!-- toc -->
+	<div class="meta-widget">
+	
+	   <a data-toggle="collapse" data-target="#toc"><i class="fa fa-bars"></i></a>
+	   <div id="toc" class="toc collapse in">
+			<ol class="toc-article"><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#基本使用方法"><span class="toc-article-text">基本使用方法</span></a></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#国际化（多语言适配）"><span class="toc-article-text">国际化（多语言适配）</span></a></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#带参数"><span class="toc-article-text">带参数</span></a></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#根据数量，是否为复数，添加-String"><span class="toc-article-text">根据数量，是否为复数，添加 String</span></a></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#添加特殊符号"><span class="toc-article-text">添加特殊符号</span></a></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#使用-HTML-样式"><span class="toc-article-text">使用 HTML 样式</span></a></li></ol>
+		</div>
+	
+	</div>
+	
+    <hr>
+	
+</div><!-- col-md-3 -->
+
+	</div>
+		
+
+</div><!-- row -->
+
+<script type="text/javascript">
+  var duoshuoQuery = { short_name: 'cnlgming' };
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';
+    ds.async = true;
+    ds.src = 'http://static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+</script>
+
+
+
+	</div>
+  </div>
+  <div class="container-narrow">
+  <footer> <p>
+  &copy; 2016 刘广明
+  
+      with help from <a href="http://hexo.io/" target="_blank">Hexo</a> and <a href="http://getbootstrap.com/" target="_blank">Twitter Bootstrap</a>. Theme by <a href="http://github.com/wzpan/hexo-theme-freemind/">Freemind</a>.    
+</p> </footer>
+</div> <!-- container-narrow -->
+  
+
+
+  
+<a id="gotop" href="#">   
+  <span>▲</span> 
+</a>
+
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+<script src="/js/bootstrap.min.js"></script>
+<script src="/js/main.js"></script>
+<script src="/js/search.js"></script> 
+
+
+
+
+   <script type="text/javascript">      
+     var search_path = "search.xml";
+	 if (search_path.length == 0) {
+	 	search_path = "search.xml";
+	 }
+	 var path = "/" + search_path;
+     searchFunc(path, 'local-search-input', 'local-search-result');
+   </script>
+
+</body>
+   </html>

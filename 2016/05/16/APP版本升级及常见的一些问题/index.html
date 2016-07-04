@@ -1,0 +1,319 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>APP版本升级及常见的一些问题 | cnLGMing&#39; Blog</title>
+  <meta name="author" content="刘广明">
+  
+  <meta name="description" content="因开发的是公司内部的OA APP，APP没有发布到应用市场，同时也未使用到第三方推送SDK，为了提供后续的版本更新，自己写了版本更新的操作。如有不妥之处，欢迎留言，谢谢~">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <meta property="og:title" content="APP版本升级及常见的一些问题"/>
+  <meta property="og:site_name" content="cnLGMing&#39; Blog"/>
+
+  
+    <meta property="og:image" content="undefined"/>
+  
+
+  
+  
+    <link href="/favicon.png" rel="icon">
+  
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="/css/themes/bootstrap.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/font-awesome.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/responsive.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/highlight.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/google-fonts.css" media="screen" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+
+  <script src="/js/jquery-2.0.3.min.js"></script>
+
+  <!-- analytics -->
+  
+
+
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?1d8758dd8ddd40e2535e3c3079a729ac";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+</head>
+
+ <body>  
+  <nav id="main-nav" class="navbar navbar-inverse navbar-default navbar-fixed-top" role="navigation">
+    <div class="container">
+      <button type="button" class="navbar-header navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+	<span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+       <a class="navbar-brand" href="/">cnLGMing&#39; Blog</a>
+      <div class="collapse navbar-collapse nav-menu">
+		<ul class="nav navbar-nav">
+		  
+		  <li>
+			<a href="/archives" title="全部文章">
+			  <i class="fa fa-archive"></i>归档
+			</a>
+		  </li>
+		  
+		  <li>
+			<a href="/categories" title="全部分类">
+			  <i class="fa fa-folder"></i>分类
+			</a>
+		  </li>
+		  
+		  <li>
+			<a href="/tags" title="全部标签">
+			  <i class="fa fa-tags"></i>标签
+			</a>
+		  </li>
+		  
+		  <li>
+			<a href="/about" title="关于我">
+			  <i class="fa fa-user"></i>关于我
+			</a>
+		  </li>
+		  
+		</ul>
+      </div>
+    </div> <!-- container -->
+</nav>
+<div class="clearfix"></div>
+
+  <div class="container">
+  	<div class="content">
+    	 
+
+
+	
+		<div class="page-header page-header-inverse ">		
+			<h1 class="title title-inverse "> APP版本升级及常见的一些问题</h1>
+		</div>		
+	
+
+
+
+
+
+
+<div class="row post">
+	<!-- cols -->
+	
+	<div id="top_meta"></div>
+	<div class="col-md-9">
+	
+
+	<!-- content -->
+	<div class="mypage">		
+	  
+		 <div class="alert alert-success description">
+			<i class="fa fa-info-circle"></i> <p>因开发的是公司内部的OA APP，APP没有发布到应用市场，同时也未使用到第三方推送SDK，为了提供后续的版本更新，自己写了版本更新的操作。如有不妥之处，欢迎留言，谢谢~</p>
+			
+		 </div> <!-- alert -->
+	  		
+
+	  <p>因开发的是公司内部的OA APP，APP没有发布到应用市场，同时也未使用到第三方推送SDK，为了提供后续的版本更新，自己写了版本更新的操作。</p>
+<a id="more"></a>
+<h1 id="版本更新的两个概念"><a href="#版本更新的两个概念" class="headerlink" title="版本更新的两个概念"></a>版本更新的两个概念</h1><p>关于版本更新，需要知道的两个概念，分别：</p>
+<ul>
+<li>versionCode：对消费者不可见，仅用于应用市场、程序内部识别版本，判断新旧等用途。</li>
+<li>versionName：展示给消费者，消费者会通过它认知自己安装的版本。</li>
+</ul>
+<h1 id="版本更新的流程图"><a href="#版本更新的流程图" class="headerlink" title="版本更新的流程图"></a>版本更新的流程图</h1><p><strong>以下是我写版本更新时的思路流程图：</strong></p>
+<p><img src="https://ooo.0o0.ooo/2016/05/16/5739e15735a60.png" alt="流程图__版本升级.png"></p>
+<h1 id="关于开发中版本更新遇到的问题"><a href="#关于开发中版本更新遇到的问题" class="headerlink" title="关于开发中版本更新遇到的问题"></a>关于开发中版本更新遇到的问题</h1><h2 id="发布了一个-versionCode-错误的版本，怎么办"><a href="#发布了一个-versionCode-错误的版本，怎么办" class="headerlink" title="发布了一个 versionCode 错误的版本，怎么办"></a>发布了一个 versionCode 错误的版本，怎么办</h2><p>​    场景：1.0版本的 versionCode 是1；而1.1版本的 versionCode 被误写成了21；但在之后发布的1.2版本仍然使用的是3。</p>
+<p>​    那么，带来的问题就是：1.1版本的用户无法升级到1.2版本，因为21&gt;3，在程序看来，1.1的版本反而比1.2的新；以此同时，1.2版本的用户还会收到提示更新到1.1，导致回滚到旧版本，这种体验是极差的。</p>
+<p>​    所以，当我遇到这样的情况时，我是在新版本将 versionCode 直接跳到30，重新开始的。</p>
+<h2 id="发出去的应用有-Bug-，怎么办"><a href="#发出去的应用有-Bug-，怎么办" class="headerlink" title="发出去的应用有 Bug ，怎么办"></a>发出去的应用有 Bug ，怎么办</h2><p>我的做法是分为两种情况：</p>
+<ol>
+<li>当 bug 无法再短时间内解决时，直接将之前的旧版本的 versionCode 改大点，提交新版本，供用户下载。</li>
+<li>bug 可以短时间内解决时，赶紧修复 bug ，加 VersionCode，发布新版本</li>
+</ol>
+<blockquote>
+<p><strong>作者简介</strong>：</p>
+<p><strong>刘广明</strong>(<a href="http://weibo.com/u/1665380350" target="_blank" rel="external">@ cnLGMing</a>)，一步一步往上爬。</p>
+<p><a href="http://www.liuguangmingcn.com/" target="_blank" rel="external">个人博客</a> 、<a href="https://github.com/ cnLGMing" target="_blank" rel="external">GitHub</a> 、<a href="https://www.zhihu.com/people/LGMing" target="_blank" rel="external">知乎</a></p>
+<p><strong>文章若有不对之处，欢迎指正，谢谢~</strong></p>
+<p><strong>版权声明：原创作品，转载时请务必注明原始出处。</strong></p>
+</blockquote>
+	  
+	</div>
+
+	<div>
+  	<center>
+	<div class="pagination">
+<ul class="pagination">
+	 
+				
+    	<li class="prev"><a href="/2016/06/03/Android中的strings.xml详解/" class="alignleft prev"><i class="fa fa-arrow-circle-o-left"></i>上一页</a></li>
+  		
+
+        <li><a href="/archives"><i class="fa fa-archive"></i>Archive</a></li>
+
+		
+		   <li class="next"><a href="/2016/05/11/常用的正则表达式/" class="alignright next">下一页<i class="fa fa-arrow-circle-o-right"></i></a></li>         
+        
+	
+</ul>
+</div>
+
+    </center>
+	</div>
+
+    <!-- share -->
+    
+        
+    <div class="bdsharebuttonbox">
+        <a href="#" class="bds_more" data-cmd="more"></a>
+        <a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信"></a>
+        <a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
+        <a href="#" class="bds_fbook" data-cmd="fbook" title="分享到Facebook"></a>
+        <a href="#" class="bds_twi" data-cmd="twi" title="分享到Twitter"></a>
+        <a href="#" class="bds_linkedin" data-cmd="linkedin" title="分享到linkedin"></a>
+        <a href="#" class="bds_evernotecn" data-cmd="evernotecn" title="分享到印象笔记"></a>
+        <a href="#" class="bds_youdao" data-cmd="youdao" title="分享到有道云笔记"></a>
+        <a href="#" class="bds_copy" data-cmd="copy" title="分享到复制网址"></a>
+    </div>
+    <script>
+        window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"1","bdSize":"24"},"share":{}};
+        with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+    </script>
+
+
+        
+
+    
+	
+	<!-- comment -->
+	
+<section id="comment">
+  <h2 class="title">留言</h2>
+
+  
+  	 <div class="ds-thread" data-thread-key="2016/05/16/APP版本升级及常见的一些问题/" data-title="APP版本升级及常见的一些问题" data-url="http://yoursite.com/2016/05/16/APP版本升级及常见的一些问题/"></div>  
+  
+</section>
+
+	</div> <!-- col-md-9/col-md-12 -->
+		
+	
+	<div id="side_meta">
+		<div class="col-md-3" id="post_meta"> 
+
+	<!-- date -->
+	
+	<div class="meta-widget">
+	<i class="fa fa-clock-o"></i>
+	2016-05-16 
+	</div>
+	
+
+	<!-- categories -->
+    
+	<div class="meta-widget">
+	<a data-toggle="collapse" data-target="#categorys"><i class="fa fa-folder"></i></a>	
+    <ul id="categorys" class="tag_box list-unstyled collapse in">
+          
+  <li>
+    <li><a href="/categories/Android基础/">Android基础<span>2</span></a></li>
+  </li>
+
+    </ul>
+	</div>
+	
+
+	<!-- tags -->
+	
+	<div class="meta-widget">
+	<a data-toggle="collapse" data-target="#tags"><i class="fa fa-tags"></i></a>		  
+    <ul id="tags" class="tag_box list-unstyled collapse in">	  
+	    
+  <li><a href="/tags/APP升级/">APP升级<span>1</span></a></li>
+    </ul>
+	</div>
+		
+
+	<!-- toc -->
+	<div class="meta-widget">
+	
+	   <a data-toggle="collapse" data-target="#toc"><i class="fa fa-bars"></i></a>
+	   <div id="toc" class="toc collapse in">
+			<ol class="toc-article"><li class="toc-article-item toc-article-level-1"><a class="toc-article-link" href="#版本更新的两个概念"><span class="toc-article-text">版本更新的两个概念</span></a></li><li class="toc-article-item toc-article-level-1"><a class="toc-article-link" href="#版本更新的流程图"><span class="toc-article-text">版本更新的流程图</span></a></li><li class="toc-article-item toc-article-level-1"><a class="toc-article-link" href="#关于开发中版本更新遇到的问题"><span class="toc-article-text">关于开发中版本更新遇到的问题</span></a><ol class="toc-article-child"><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#发布了一个-versionCode-错误的版本，怎么办"><span class="toc-article-text">发布了一个 versionCode 错误的版本，怎么办</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#发出去的应用有-Bug-，怎么办"><span class="toc-article-text">发出去的应用有 Bug ，怎么办</span></a></li></ol></li></ol>
+		</div>
+	
+	</div>
+	
+    <hr>
+	
+</div><!-- col-md-3 -->
+
+	</div>
+		
+
+</div><!-- row -->
+
+<script type="text/javascript">
+  var duoshuoQuery = { short_name: 'cnlgming' };
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';
+    ds.async = true;
+    ds.src = 'http://static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+</script>
+
+
+
+	</div>
+  </div>
+  <div class="container-narrow">
+  <footer> <p>
+  &copy; 2016 刘广明
+  
+      with help from <a href="http://hexo.io/" target="_blank">Hexo</a> and <a href="http://getbootstrap.com/" target="_blank">Twitter Bootstrap</a>. Theme by <a href="http://github.com/wzpan/hexo-theme-freemind/">Freemind</a>.    
+</p> </footer>
+</div> <!-- container-narrow -->
+  
+
+
+  
+<a id="gotop" href="#">   
+  <span>▲</span> 
+</a>
+
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+<script src="/js/bootstrap.min.js"></script>
+<script src="/js/main.js"></script>
+<script src="/js/search.js"></script> 
+
+
+
+
+   <script type="text/javascript">      
+     var search_path = "search.xml";
+	 if (search_path.length == 0) {
+	 	search_path = "search.xml";
+	 }
+	 var path = "/" + search_path;
+     searchFunc(path, 'local-search-input', 'local-search-result');
+   </script>
+
+</body>
+   </html>

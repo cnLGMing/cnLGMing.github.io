@@ -1,0 +1,364 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>SnackBar的使用及封装 | cnLGMing&#39; Blog</title>
+  <meta name="author" content="刘广明">
+  
+  <meta name="description" content="这篇博客是学习完 Android 6.0 的新控件 SnackBar 后所写。如有不妥之处，欢迎留言，谢谢~">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <meta property="og:title" content="SnackBar的使用及封装"/>
+  <meta property="og:site_name" content="cnLGMing&#39; Blog"/>
+
+  
+    <meta property="og:image" content="undefined"/>
+  
+
+  
+  
+    <link href="/favicon.png" rel="icon">
+  
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="/css/themes/bootstrap.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/font-awesome.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/responsive.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/highlight.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/google-fonts.css" media="screen" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+
+  <script src="/js/jquery-2.0.3.min.js"></script>
+
+  <!-- analytics -->
+  
+
+
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?1d8758dd8ddd40e2535e3c3079a729ac";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+</head>
+
+ <body>  
+  <nav id="main-nav" class="navbar navbar-inverse navbar-default navbar-fixed-top" role="navigation">
+    <div class="container">
+      <button type="button" class="navbar-header navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+	<span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+       <a class="navbar-brand" href="/">cnLGMing&#39; Blog</a>
+      <div class="collapse navbar-collapse nav-menu">
+		<ul class="nav navbar-nav">
+		  
+		  <li>
+			<a href="/archives" title="全部文章">
+			  <i class="fa fa-archive"></i>归档
+			</a>
+		  </li>
+		  
+		  <li>
+			<a href="/categories" title="全部分类">
+			  <i class="fa fa-folder"></i>分类
+			</a>
+		  </li>
+		  
+		  <li>
+			<a href="/tags" title="全部标签">
+			  <i class="fa fa-tags"></i>标签
+			</a>
+		  </li>
+		  
+		  <li>
+			<a href="/about" title="关于我">
+			  <i class="fa fa-user"></i>关于我
+			</a>
+		  </li>
+		  
+		</ul>
+      </div>
+    </div> <!-- container -->
+</nav>
+<div class="clearfix"></div>
+
+  <div class="container">
+  	<div class="content">
+    	 
+
+
+	
+		<div class="page-header page-header-inverse ">		
+			<h1 class="title title-inverse "> SnackBar的使用及封装</h1>
+		</div>		
+	
+
+
+
+
+
+
+<div class="row post">
+	<!-- cols -->
+	
+	<div id="top_meta"></div>
+	<div class="col-md-9">
+	
+
+	<!-- content -->
+	<div class="mypage">		
+	  
+		 <div class="alert alert-success description">
+			<i class="fa fa-info-circle"></i> <p>这篇博客是学习完 Android 6.0 的新控件 SnackBar 后所写。如有不妥之处，欢迎留言，谢谢~</p>
+			
+		 </div> <!-- alert -->
+	  		
+
+	  <p>SnackBar<br><a id="more"></a></p>
+<h3 id="SnackBar-的简述"><a href="#SnackBar-的简述" class="headerlink" title="SnackBar 的简述"></a>SnackBar 的简述</h3><p>Snackbar 是 Android Support Design Library 库中的一个控件。</p>
+<p><strong>优势：</strong></p>
+<ul>
+<li>通常在屏幕底部快速弹出消息(位置取决于容纳 SnackBar 控件的位置)</li>
+<li>比 Toast 更加好用</li>
+<li>比 Dialog 更轻量级</li>
+<li>可与用户进行简单的交互</li>
+<li>可滑动删除</li>
+</ul>
+<hr>
+<h3 id="SnackBar-的基本使用"><a href="#SnackBar-的基本使用" class="headerlink" title="SnackBar 的基本使用"></a>SnackBar 的基本使用</h3><p>在使用 SnackBar 之前，需要导入 <code>com.android.support:design</code> 库：<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">compile 'com.android.support:design:23.3.0'</div></pre></td></tr></table></figure></p>
+<p><strong>PS：</strong>需要一个控件容器来容纳 SnackBar 。Google 推荐使用 CoordinatorLayout 来作为 SnackBar 的容器。在 SnackBar 的源码中是这样解释的：<br><img src="https://ooo.0o0.ooo/2016/06/03/57511fe75d163.png" alt=""></p>
+<blockquote>
+<p>CoordinatorLayout 也是 Android Support Design Library 库中的一个控件。CoordinatorLayout 使用新的思路通过协调调度子布局的形式实现触摸影响布局的形式产生动画效果。其有两个功能： 作为顶层布局；调度协调子布局。</p>
+</blockquote>
+<ul>
+<li><p>最简单的 SnackBar 使用方式与 Toast 十分相似。</p>
+<ul>
+<li>图例：</li>
+</ul>
+<p><img src="https://ooo.0o0.ooo/2016/06/03/57511e3cb5619.png" alt=""></p>
+<ul>
+<li>使用方式：<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/**</span></div><div class="line">  * 用于创建SnackBar </div><div class="line">  * <span class="doctag">@param</span> view  容纳SnackBar的父容器 </div><div class="line">  * <span class="doctag">@param</span> text  显示在左边的Message</div><div class="line">  * <span class="doctag">@param</span> duration  持续时间：Snackbar.LENGTH_SHORT或LENGTH_LONG </div><div class="line">  */</div><div class="line">Snackbar.make(View view,CharSequence text,<span class="keyword">int</span> duration).show(); <span class="comment">// 显示</span></div></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+<li><p>右侧还有按钮的 SnackBar </p>
+<ul>
+<li>图例：</li>
+</ul>
+<p><img src="https://ooo.0o0.ooo/2016/06/03/5751414278108.gif" alt=""></p>
+<ul>
+<li>使用方式：<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">Snackbar.make(View view,CharSequence text,<span class="keyword">int</span> duration)</div><div class="line">		<span class="comment">/**</span></div><div class="line">		 * 设置 SnackBar 右侧的按钮</div><div class="line">		 * <span class="doctag">@param</span> text 按钮名字</div><div class="line">		 * <span class="doctag">@param</span> listener 点击监听事件</div><div class="line">		 */</div><div class="line">		.setAction(CharSequence text,<span class="keyword">new</span> View.OnClickListener()&#123;</div><div class="line">		 	<span class="meta">@Override</span></div><div class="line">		 	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onClick</span><span class="params">(View v)</span> </span>&#123;</div><div class="line">		 	  <span class="comment">// 点击 SnackBar 右侧按钮后的逻辑</span></div><div class="line">		 	&#125;</div><div class="line">		&#125;)</div><div class="line">		.show();	<span class="comment">// 显示</span></div></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+<li><p>若想在 SnackBar 出现或消失时，做其他逻辑，可以使用其Callback方法</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">Snackbar.make(View view,CharSequence text,<span class="keyword">int</span> duration)</div><div class="line">  		.setCallback(<span class="keyword">new</span> Snackbar.Callback() &#123;</div><div class="line">  		  <span class="meta">@Override</span></div><div class="line">  		  <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onDismissed</span><span class="params">(Snackbar snackbar, <span class="keyword">int</span> event)</span> </span>&#123;</div><div class="line">  		    <span class="keyword">super</span>.onDismissed(snackbar, event);</div><div class="line">  		    <span class="comment">// 消失时</span></div><div class="line">  		  &#125;</div><div class="line">  		  <span class="meta">@Override</span></div><div class="line">  		  <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onShown</span><span class="params">(Snackbar snackbar)</span> </span>&#123;</div><div class="line">  		    <span class="keyword">super</span>.onShown(snackbar);</div><div class="line">  		    <span class="comment">// 出现时</span></div><div class="line">  		  &#125;</div><div class="line">  		&#125;)</div><div class="line">  		.show();	<span class="comment">// 显示</span></div></pre></td></tr></table></figure>
+</li>
+</ul>
+<h3 id="SnackBar-的颜色改造"><a href="#SnackBar-的颜色改造" class="headerlink" title="SnackBar 的颜色改造"></a>SnackBar 的颜色改造</h3><p>在使用 SnackBar 过程中，会发现 SnackBar 和 Toast 都是样式过于单一。然而开发过程中，对不同的信息往往需要使用不同的颜色进行区分，引起用户的注意。Android 只提供了修改 Action 文字颜色的方法<code>setActionTextColor()</code> ，显然是不够的。那么只能我们自己阅读源码后，自行添加了。<br>阅读源码后，有所发现：</p>
+<ul>
+<li><p>SnackBar 中定义了一个内部类 <code>SnackbarLayout</code> ，且这个内部类是继承 <code>LinearLayout</code> 的；</p>
+</li>
+<li><p>SnackbarLayout 中加载了 <code>R.layout.design_layout_snackbar_include</code>，那意味着 SnackBar 的布局时是有 SnackbarLayout 决定的。<br><code>R.layout.design_layout_snackbar_include</code> 布局文件的代码：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div></pre></td><td class="code"><pre><div class="line">&lt;?xml version="1.0" encoding="utf-8"?&gt;</div><div class="line"><span class="tag">&lt;<span class="name">merge</span> <span class="attr">xmlns:android</span>=<span class="string">"http://schemas.android.com/apk/res/android"</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">TextView</span></span></div><div class="line">            <span class="attr">android:id</span>=<span class="string">"@+id/snackbar_text"</span></div><div class="line">            <span class="attr">android:layout_width</span>=<span class="string">"wrap_content"</span></div><div class="line">            <span class="attr">android:layout_height</span>=<span class="string">"wrap_content"</span></div><div class="line">            <span class="attr">android:layout_weight</span>=<span class="string">"1"</span></div><div class="line">            <span class="attr">android:paddingTop</span>=<span class="string">"14dp"</span></div><div class="line">            <span class="attr">android:paddingBottom</span>=<span class="string">"14dp"</span></div><div class="line">            <span class="attr">android:paddingLeft</span>=<span class="string">"12dp"</span></div><div class="line">            <span class="attr">android:paddingRight</span>=<span class="string">"12dp"</span></div><div class="line">            <span class="attr">android:textAppearance</span>=<span class="string">"@style/TextAppearance.Design.Snackbar.Message"</span></div><div class="line">            <span class="attr">android:maxLines</span>=<span class="string">"1"</span></div><div class="line">            <span class="attr">android:layout_gravity</span>=<span class="string">"center_vertical|left|start"</span></div><div class="line">            <span class="attr">android:ellipsize</span>=<span class="string">"end"</span></div><div class="line">            <span class="attr">android:textAlignment</span>=<span class="string">"viewStart"</span>/&gt;</div><div class="line"></div><div class="line">  <span class="tag">&lt;<span class="name">Button</span></span></div><div class="line">          <span class="attr">android:id</span>=<span class="string">"@+id/snackbar_action"</span></div><div class="line">          <span class="attr">android:layout_width</span>=<span class="string">"wrap_content"</span></div><div class="line">          <span class="attr">android:layout_height</span>=<span class="string">"wrap_content"</span></div><div class="line">          <span class="attr">android:layout_marginLeft</span>=<span class="string">"0dp"</span></div><div class="line">          <span class="attr">android:layout_marginStart</span>=<span class="string">"0dp"</span></div><div class="line">          <span class="attr">android:layout_gravity</span>=<span class="string">"center_vertical|right|end"</span></div><div class="line">          <span class="attr">android:paddingTop</span>=<span class="string">"14dp"</span></div><div class="line">          <span class="attr">android:paddingBottom</span>=<span class="string">"14dp"</span></div><div class="line">          <span class="attr">android:paddingLeft</span>=<span class="string">"12dp"</span></div><div class="line">          <span class="attr">android:paddingRight</span>=<span class="string">"12dp"</span></div><div class="line">          <span class="attr">android:visibility</span>=<span class="string">"gone"</span> // 注意到没? 当设置了<span class="attr">SnackBar</span>有按钮时才会显示</div><div class="line">          <span class="attr">android:textColor</span>=<span class="string">"?attr/colorAccent"</span></div><div class="line">          <span class="attr">style</span>=<span class="string">"?attr/borderlessButtonStyle"</span>/&gt;</div><div class="line"><span class="tag">&lt;/<span class="name">merge</span>&gt;</span></div></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>了解到这个后，设置消息和 SnackBar 的背景颜色就是很简单了。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/**</span></div><div class="line"> * 设置 SnackBar 的颜色</div><div class="line"> * 因为 Action 已有设置的方法，所以这里只需设置消息和背景的颜色</div><div class="line"> *</div><div class="line"> * <span class="doctag">@param</span> snackbar        SnackBar实例</div><div class="line"> * <span class="doctag">@param</span> messageColor    消息的颜色</div><div class="line"> * <span class="doctag">@param</span> backgroundColor 背景颜色</div><div class="line"> */</div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">setSnackbarColor</span><span class="params">(Snackbar snackbar, <span class="keyword">int</span> messageColor, </span></span></div><div class="line">                                    <span class="keyword">int</span> backgroundColor) &#123;</div><div class="line">	<span class="comment">/** 获取Snackbar的view */</span></div><div class="line">	View view = snackbar.getView();</div><div class="line">	<span class="keyword">if</span> (view != <span class="keyword">null</span>) &#123;</div><div class="line">		<span class="comment">// 修改view的背景色</span></div><div class="line">		view.setBackgroundColor(backgroundColor);</div><div class="line">		<span class="comment">// 获取Snackbar的message控件，修改字体颜色</span></div><div class="line">		((TextView)view.findViewById(R.id.snackbar_text))</div><div class="line">						.setTextColor(messageColor);</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<h3 id="SnackBar-的布局改造"><a href="#SnackBar-的布局改造" class="headerlink" title="SnackBar 的布局改造"></a>SnackBar 的布局改造</h3><blockquote>
+<p>Google 在 Material Design 设计规范中提到：当有2个或者2个以上的操作出现时，应该使用提示框而不是 Snackbar，即使其中的一个是取消操作。如果 Snackbar 中提示的操作重要到需要打断屏幕上正在进行的操作，那么理当使用提示框而非 Snackbar。</p>
+</blockquote>
+<p>　　但有时候我们接到的需求是要在 SnackBar 添加其他布局，怎么办呢？（我很想遵循官方的设计规范，但却因生活压力被迫接受那些奇葩的需求）</p>
+<p>　　这个时候，我们应该想到刚刚提到的，SnackBar 的布局是由 SnackbarLayout 决定的。那我们可以直接新建一个布局，然后添加进去就可以了嘛。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/**</span></div><div class="line"> * 为SnackBar添加布局</div><div class="line"> *</div><div class="line"> * <span class="doctag">@param</span> snackbar SnackBar实例</div><div class="line"> * <span class="doctag">@param</span> layoutId 布局文件</div><div class="line"> * <span class="doctag">@param</span> index    位置</div><div class="line"> */</div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">addViewToSnackbar</span><span class="params">(Snackbar snackbar, <span class="keyword">int</span> layoutId, <span class="keyword">int</span> index)</span> </span>&#123;</div><div class="line">	<span class="comment">/** 获取snackbar的View(其实就是SnackbarLayout) */</span></div><div class="line">	View snackbarview = snackbar.getView();</div><div class="line">	Snackbar.SnackbarLayout snackbarLayout = (Snackbar.SnackbarLayout) snackbarview;</div><div class="line"></div><div class="line">	View add_view = LayoutInflater.from(snackbarview.getContext())</div><div class="line">　　　　　　　　　　　　　　　　　　　.inflate(layoutId, <span class="keyword">null</span>);   <span class="comment">//加载布局文件新建View</span></div><div class="line">	<span class="comment">// 设置新建布局参数</span></div><div class="line">	LinearLayout.LayoutParams p = <span class="keyword">new</span> LinearLayout.LayoutParams(</div><div class="line">　　　　　　　　　　　　　　　　　　　　　　　LinearLayout.LayoutParams.WRAP_CONTENT,</div><div class="line">　　　　　　　　　　　　　　　　　　　　　　　LinearLayout.LayoutParams.WRAP_CONTENT);</div><div class="line">	<span class="comment">// 设置新建布局在Snackbar内垂直居中显示</span></div><div class="line">	p.gravity = Gravity.CENTER_VERTICAL;</div><div class="line">	<span class="comment">// 将新建布局添加进snackbarLayout相应位置</span></div><div class="line">	snackbarLayout.addView(add_view, index, p);</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p><strong>使用示例：</strong><br>新建一个布局文件：（直接一个ImageView，并设置为默认图标）<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">&lt;?xml version="1.0" encoding="utf-8"?&gt;</div><div class="line"><span class="tag">&lt;<span class="name">LinearLayout</span> <span class="attr">xmlns:android</span>=<span class="string">"http://schemas.android.com/apk/res/android"</span></span></div><div class="line">              <span class="attr">android:layout_width</span>=<span class="string">"wrap_content"</span></div><div class="line">              <span class="attr">android:layout_height</span>=<span class="string">"wrap_content"</span></div><div class="line">              <span class="attr">android:layout_gravity</span>=<span class="string">"center_vertical"</span>&gt;</div><div class="line"><span class="tag">&lt;<span class="name">ImageView</span></span></div><div class="line">           <span class="attr">android:layout_width</span>=<span class="string">"wrap_content"</span></div><div class="line">           <span class="attr">android:layout_height</span>=<span class="string">"wrap_content"</span></div><div class="line">           <span class="attr">android:layout_gravity</span>=<span class="string">"center_vertical"</span></div><div class="line">           <span class="attr">android:src</span>=<span class="string">"@mipmap/ic_launcher"</span>/&gt;</div><div class="line"><span class="tag">&lt;/<span class="name">LinearLayout</span>&gt;</span></div></pre></td></tr></table></figure></p>
+<p><strong>Java文件中运用：</strong><br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">Snackbar snackbar = Snackbar.make(mContainer, <span class="string">"这是普通 SnackBar"</span>,Snackbar.LENGTH_SHORT);</div><div class="line">setSnackbarColor(snackbar, Color.RED, Color.BLUE);</div><div class="line">addViewToSnackbar(snackbar, R.layout.snackbar_image, <span class="number">0</span>);</div><div class="line">snackbar.show();</div></pre></td></tr></table></figure></p>
+<p><strong>运行后示例：</strong><br><img src="https://ooo.0o0.ooo/2016/06/03/575140ef20ce7.gif" alt=""></p>
+<h3 id="SnackBar-封装"><a href="#SnackBar-封装" class="headerlink" title="SnackBar 封装"></a>SnackBar 封装</h3><p>为了更方便、灵活的使用 SnackBar，对 SnackBar 进行封装。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div><div class="line">103</div><div class="line">104</div><div class="line">105</div><div class="line">106</div><div class="line">107</div><div class="line">108</div><div class="line">109</div><div class="line">110</div><div class="line">111</div><div class="line">112</div><div class="line">113</div><div class="line">114</div><div class="line">115</div><div class="line">116</div><div class="line">117</div><div class="line">118</div><div class="line">119</div><div class="line">120</div><div class="line">121</div><div class="line">122</div><div class="line">123</div><div class="line">124</div><div class="line">125</div><div class="line">126</div><div class="line">127</div><div class="line">128</div><div class="line">129</div><div class="line">130</div><div class="line">131</div><div class="line">132</div><div class="line">133</div><div class="line">134</div><div class="line">135</div><div class="line">136</div><div class="line">137</div><div class="line">138</div><div class="line">139</div><div class="line">140</div><div class="line">141</div><div class="line">142</div><div class="line">143</div><div class="line">144</div><div class="line">145</div><div class="line">146</div><div class="line">147</div><div class="line">148</div><div class="line">149</div><div class="line">150</div><div class="line">151</div><div class="line">152</div><div class="line">153</div><div class="line">154</div><div class="line">155</div><div class="line">156</div><div class="line">157</div><div class="line">158</div><div class="line">159</div><div class="line">160</div><div class="line">161</div><div class="line">162</div><div class="line">163</div><div class="line">164</div><div class="line">165</div><div class="line">166</div><div class="line">167</div><div class="line">168</div><div class="line">169</div><div class="line">170</div><div class="line">171</div><div class="line">172</div><div class="line">173</div><div class="line">174</div><div class="line">175</div><div class="line">176</div><div class="line">177</div><div class="line">178</div><div class="line">179</div><div class="line">180</div><div class="line">181</div><div class="line">182</div><div class="line">183</div><div class="line">184</div><div class="line">185</div><div class="line">186</div><div class="line">187</div><div class="line">188</div><div class="line">189</div><div class="line">190</div><div class="line">191</div><div class="line">192</div><div class="line">193</div><div class="line">194</div><div class="line">195</div><div class="line">196</div><div class="line">197</div><div class="line">198</div><div class="line">199</div><div class="line">200</div><div class="line">201</div><div class="line">202</div><div class="line">203</div><div class="line">204</div><div class="line">205</div><div class="line">206</div><div class="line">207</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> android.graphics.Color;</div><div class="line"><span class="keyword">import</span> android.support.design.widget.Snackbar;</div><div class="line"><span class="keyword">import</span> android.view.Gravity;</div><div class="line"><span class="keyword">import</span> android.view.LayoutInflater;</div><div class="line"><span class="keyword">import</span> android.view.View;</div><div class="line"><span class="keyword">import</span> android.widget.LinearLayout;</div><div class="line"><span class="keyword">import</span> android.widget.TextView;</div><div class="line"></div><div class="line"><span class="comment">/**</span></div><div class="line"> * @创建者 　　　　Hakka_LGM</div><div class="line"> * @创建时间 　　　2016-6-3 16:35</div><div class="line"> * @描述 　　　　　对SnackBar进行封装</div><div class="line"> */</div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">SnackBarUtils</span> </span>&#123;</div><div class="line"></div><div class="line">  <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> INFO    = <span class="number">1</span>;</div><div class="line">  <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> CONFIRM = <span class="number">2</span>;</div><div class="line">  <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> WARNING = <span class="number">3</span>;</div><div class="line">  <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> ALERT   = <span class="number">4</span>;</div><div class="line"></div><div class="line">  <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">int</span> red    = <span class="number">0xfff44336</span>;</div><div class="line">  <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">int</span> green  = <span class="number">0xff4caf50</span>;</div><div class="line">  <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">int</span> blue   = <span class="number">0xff2195f3</span>;</div><div class="line">  <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">int</span> orange = <span class="number">0xffffc107</span>;</div><div class="line"></div><div class="line"></div><div class="line">  <span class="comment">/**</span></div><div class="line">     * Snackbar：自定义颜色的短显示</div><div class="line">     *</div><div class="line">     * <span class="doctag">@param</span> view</div><div class="line">     * <span class="doctag">@param</span> message</div><div class="line">     * <span class="doctag">@param</span> messageColor</div><div class="line">     * <span class="doctag">@param</span> backgroundColor</div><div class="line">     * <span class="doctag">@return</span></div><div class="line">     */</div><div class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Snackbar <span class="title">shortSnackbar</span><span class="params">(View view, String message, </span></span></div><div class="line">                                       <span class="keyword">int</span> messageColor,<span class="keyword">int</span> backgroundColor) &#123;</div><div class="line">    Snackbar snackbar = Snackbar.make(view, message, Snackbar.LENGTH_SHORT);</div><div class="line">    setSnackBarColor(snackbar, messageColor, backgroundColor);</div><div class="line">    <span class="keyword">return</span> snackbar;</div><div class="line">  &#125;</div><div class="line"></div><div class="line">  <span class="comment">/**</span></div><div class="line">     * Snackbar：自定义颜色的长显示</div><div class="line">     *</div><div class="line">     * <span class="doctag">@param</span> view</div><div class="line">     * <span class="doctag">@param</span> message</div><div class="line">     * <span class="doctag">@param</span> messageColor</div><div class="line">     * <span class="doctag">@param</span> backgroundColor</div><div class="line">     * <span class="doctag">@return</span></div><div class="line">     */</div><div class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Snackbar <span class="title">longSnackbar</span><span class="params">(View view, String message, <span class="keyword">int</span> messageColor,</span></span></div><div class="line">                                      <span class="keyword">int</span> backgroundColor) &#123;</div><div class="line">    Snackbar snackbar = Snackbar.make(view, message, Snackbar.LENGTH_LONG);</div><div class="line">    setSnackBarColor(snackbar, messageColor, backgroundColor);</div><div class="line">    <span class="keyword">return</span> snackbar;</div><div class="line">  &#125;</div><div class="line"></div><div class="line"></div><div class="line">  <span class="comment">/**</span></div><div class="line">     * 短显示Snackbar，可选预设类型</div><div class="line">     *</div><div class="line">     * <span class="doctag">@param</span> view</div><div class="line">     * <span class="doctag">@param</span> message</div><div class="line">     * <span class="doctag">@param</span> type</div><div class="line">     * <span class="doctag">@return</span></div><div class="line">     */</div><div class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Snackbar <span class="title">shortSnackbar</span><span class="params">(View view, String message, <span class="keyword">int</span> type)</span> </span>&#123;</div><div class="line">    Snackbar snackbar = Snackbar.make(view, message, Snackbar.LENGTH_SHORT);</div><div class="line">    switchType(snackbar, type);</div><div class="line">    <span class="keyword">return</span> snackbar;</div><div class="line">  &#125;</div><div class="line"></div><div class="line">  <span class="comment">/**</span></div><div class="line">     * 长显示Snackbar，可选预设类型</div><div class="line">     *</div><div class="line">     * <span class="doctag">@param</span> view</div><div class="line">     * <span class="doctag">@param</span> message</div><div class="line">     * <span class="doctag">@param</span> type</div><div class="line">     * <span class="doctag">@return</span></div><div class="line">     */</div><div class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Snackbar <span class="title">longSnackbar</span><span class="params">(View view, String message, <span class="keyword">int</span> type)</span> </span>&#123;</div><div class="line">    Snackbar snackbar = Snackbar.make(view, message, Snackbar.LENGTH_LONG);</div><div class="line">    switchType(snackbar, type);</div><div class="line">    <span class="keyword">return</span> snackbar;</div><div class="line">  &#125;</div><div class="line"></div><div class="line"></div><div class="line">  <span class="comment">/**</span></div><div class="line">     * 自定义时常显示Snackbar，自定义颜色</div><div class="line">     *</div><div class="line">     * <span class="doctag">@param</span> view</div><div class="line">     * <span class="doctag">@param</span> message</div><div class="line">     * <span class="doctag">@param</span> messageColor</div><div class="line">     * <span class="doctag">@param</span> backgroundColor</div><div class="line">     * <span class="doctag">@return</span></div><div class="line">     */</div><div class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Snackbar <span class="title">IndefiniteSnackbar</span><span class="params">(View view, String message, <span class="keyword">int</span> duration,</span></span></div><div class="line">                                            <span class="keyword">int</span> messageColor, <span class="keyword">int</span> backgroundColor) &#123;</div><div class="line">    Snackbar snackbar = Snackbar</div><div class="line">      .make(view, message, Snackbar.LENGTH_INDEFINITE)</div><div class="line">      .setDuration(duration);</div><div class="line">    setSnackBarColor(snackbar, messageColor, backgroundColor);</div><div class="line">    <span class="keyword">return</span> snackbar;</div><div class="line">  &#125;</div><div class="line"></div><div class="line">  <span class="comment">/**</span></div><div class="line">     * 自定义时常显示Snackbar，可选预设类型</div><div class="line">     *</div><div class="line">     * <span class="doctag">@param</span> view</div><div class="line">     * <span class="doctag">@param</span> message</div><div class="line">     * <span class="doctag">@param</span> type</div><div class="line">     * <span class="doctag">@return</span></div><div class="line">     */</div><div class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Snackbar <span class="title">IndefiniteSnackbar</span><span class="params">(View view, String message, <span class="keyword">int</span> duration, </span></span></div><div class="line">                                            <span class="keyword">int</span> type) &#123;</div><div class="line">    Snackbar snackbar = Snackbar.make(view, message, Snackbar.LENGTH_INDEFINITE)</div><div class="line">      .setDuration(duration);</div><div class="line">    switchType(snackbar, type);</div><div class="line">    <span class="keyword">return</span> snackbar;</div><div class="line">  &#125;</div><div class="line"></div><div class="line">  <span class="comment">/**</span></div><div class="line">     * 设置Snackbar背景颜色</div><div class="line">     *</div><div class="line">     * <span class="doctag">@param</span> snackbar</div><div class="line">     * <span class="doctag">@param</span> backgroundColor</div><div class="line">     */</div><div class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">setSnackBarColor</span><span class="params">(Snackbar snackbar, <span class="keyword">int</span> backgroundColor)</span> </span>&#123;</div><div class="line">    View view = snackbar.getView();</div><div class="line">    <span class="keyword">if</span> (view != <span class="keyword">null</span>) &#123;</div><div class="line">      view.setBackgroundColor(backgroundColor);</div><div class="line">    &#125;</div><div class="line">  &#125;</div><div class="line"></div><div class="line">  <span class="comment">/**</span></div><div class="line">     * 设置SnackBar消息的颜色</div><div class="line">     *</div><div class="line">     * <span class="doctag">@param</span> snackbar</div><div class="line">     * <span class="doctag">@param</span> messageColor</div><div class="line">     */</div><div class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">setSnackBarMsgColor</span><span class="params">(Snackbar snackbar, <span class="keyword">int</span> messageColor)</span> </span>&#123;</div><div class="line">    View view = snackbar.getView();</div><div class="line">    <span class="keyword">if</span> (view != <span class="keyword">null</span>) &#123;</div><div class="line">      ((TextView) view.findViewById(R.id.snackbar_text)).setTextColor(messageColor);</div><div class="line">    &#125;</div><div class="line">  &#125;</div><div class="line"></div><div class="line">  <span class="comment">/**</span></div><div class="line">     * 设置Snackbar文字和背景颜色</div><div class="line">     *</div><div class="line">     * <span class="doctag">@param</span> snackbar</div><div class="line">     * <span class="doctag">@param</span> messageColor</div><div class="line">     * <span class="doctag">@param</span> backgroundColor</div><div class="line">     */</div><div class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">setSnackBarColor</span><span class="params">(Snackbar snackbar, <span class="keyword">int</span> messageColor, </span></span></div><div class="line">                                      <span class="keyword">int</span> backgroundColor) &#123;</div><div class="line">    View view = snackbar.getView();</div><div class="line">    <span class="keyword">if</span> (view != <span class="keyword">null</span>) &#123;</div><div class="line">      view.setBackgroundColor(backgroundColor);</div><div class="line">      ((TextView) view.findViewById(R.id.snackbar_text)).setTextColor(messageColor);</div><div class="line">    &#125;</div><div class="line">  &#125;</div><div class="line"></div><div class="line">  <span class="comment">/**</span></div><div class="line">     * 为SnackBar添加布局</div><div class="line">     *</div><div class="line">     * <span class="doctag">@param</span> snackbar SnackBar实例</div><div class="line">     * <span class="doctag">@param</span> layoutId 布局文件</div><div class="line">     * <span class="doctag">@param</span> index    位置</div><div class="line">     */</div><div class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">addView</span><span class="params">(Snackbar snackbar, <span class="keyword">int</span> layoutId, <span class="keyword">int</span> index)</span> </span>&#123;</div><div class="line">    <span class="comment">/** 获取snackbar的View(其实就是SnackbarLayout) */</span></div><div class="line">    View snackbarview = snackbar.getView();</div><div class="line">    Snackbar.SnackbarLayout snackbarLayout = (Snackbar.SnackbarLayout) snackbarview;</div><div class="line"></div><div class="line">    View add_view = LayoutInflater.from(snackbarview.getContext())</div><div class="line">                                  .inflate(layoutId, <span class="keyword">null</span>);   <span class="comment">//加载布局文件新建View</span></div><div class="line">    <span class="comment">// 设置新建布局参数</span></div><div class="line">    LinearLayout.LayoutParams p = <span class="keyword">new</span> LinearLayout.LayoutParams(</div><div class="line">                                      LinearLayout.LayoutParams.WRAP_CONTENT,</div><div class="line">                                      LinearLayout.LayoutParams.WRAP_CONTENT);</div><div class="line">    <span class="comment">// 设置新建布局在Snackbar内垂直居中显示</span></div><div class="line">    p.gravity = Gravity.CENTER_VERTICAL;</div><div class="line">    <span class="comment">// 将新建布局添加进snackbarLayout相应位置</span></div><div class="line">    snackbarLayout.addView(add_view, index, p);</div><div class="line">  &#125;</div><div class="line"></div><div class="line"></div><div class="line">  <span class="comment">//选择预设类型</span></div><div class="line">  <span class="function"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">switchType</span><span class="params">(Snackbar snackbar, <span class="keyword">int</span> type)</span> </span>&#123;</div><div class="line">    <span class="keyword">switch</span> (type) &#123;</div><div class="line">      <span class="keyword">case</span> INFO:</div><div class="line">        setSnackBarColor(snackbar, blue);</div><div class="line">        <span class="keyword">break</span>;</div><div class="line">      <span class="keyword">case</span> CONFIRM:</div><div class="line">        setSnackBarColor(snackbar, green);</div><div class="line">        <span class="keyword">break</span>;</div><div class="line">      <span class="keyword">case</span> WARNING:</div><div class="line">        setSnackBarColor(snackbar, orange);</div><div class="line">        <span class="keyword">break</span>;</div><div class="line">      <span class="keyword">case</span> ALERT:</div><div class="line">        setSnackBarColor(snackbar, Color.YELLOW, red);</div><div class="line">        <span class="keyword">break</span>;</div><div class="line">    &#125;</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<h3 id="项目地址"><a href="#项目地址" class="headerlink" title="项目地址"></a>项目地址</h3><p><a href="https://github.com/cnLGMing/SnackBarUtils" target="_blank" rel="external">Github 传送门</a></p>
+<p><strong>SnackBar</strong> 的使用教程到此结束。</p>
+<p><strong>参考博文：</strong><br><a href="http://www.jianshu.com/p/cd1e80e64311" target="_blank" rel="external">没时间解释了，快使用Snackbar</a></p>
+<blockquote>
+<p><strong>作者简介</strong>：</p>
+<p><strong>刘广明</strong>(<a href="http://weibo.com/u/1665380350" target="_blank" rel="external">@cnLGMing</a>)，一步一步往上爬。</p>
+<p><a href="http://www.liuguangmingcn.com/" target="_blank" rel="external">个人博客</a> 、<a href="https://github.com/cnLGMing" target="_blank" rel="external">GitHub</a> 、<a href="https://www.zhihu.com/people/LGMing" target="_blank" rel="external">知乎</a></p>
+<p><strong>文章若有不对之处，欢迎指正，谢谢~</strong></p>
+<p><strong>版权声明：原创作品，转载时请务必注明原始出处。</strong></p>
+</blockquote>
+	  
+	</div>
+
+	<div>
+  	<center>
+	<div class="pagination">
+<ul class="pagination">
+	 
+		
+          <li class="prev disabled"><a><i class="fa fa-arrow-circle-o-left"></i>上一页</a></li>
+        
+
+        <li><a href="/archives"><i class="fa fa-archive"></i>Archive</a></li>
+
+		
+		   <li class="next"><a href="/2016/06/18/FloatingActionButton的使用/" class="alignright next">下一页<i class="fa fa-arrow-circle-o-right"></i></a></li>         
+        
+	
+</ul>
+</div>
+
+    </center>
+	</div>
+
+    <!-- share -->
+    
+        
+    <div class="bdsharebuttonbox">
+        <a href="#" class="bds_more" data-cmd="more"></a>
+        <a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信"></a>
+        <a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
+        <a href="#" class="bds_fbook" data-cmd="fbook" title="分享到Facebook"></a>
+        <a href="#" class="bds_twi" data-cmd="twi" title="分享到Twitter"></a>
+        <a href="#" class="bds_linkedin" data-cmd="linkedin" title="分享到linkedin"></a>
+        <a href="#" class="bds_evernotecn" data-cmd="evernotecn" title="分享到印象笔记"></a>
+        <a href="#" class="bds_youdao" data-cmd="youdao" title="分享到有道云笔记"></a>
+        <a href="#" class="bds_copy" data-cmd="copy" title="分享到复制网址"></a>
+    </div>
+    <script>
+        window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"1","bdSize":"24"},"share":{}};
+        with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+    </script>
+
+
+        
+
+    
+	
+	<!-- comment -->
+	
+<section id="comment">
+  <h2 class="title">留言</h2>
+
+  
+  	 <div class="ds-thread" data-thread-key="2016/06/20/SnackBar的使用及封装/" data-title="SnackBar的使用及封装" data-url="http://yoursite.com/2016/06/20/SnackBar的使用及封装/"></div>  
+  
+</section>
+
+	</div> <!-- col-md-9/col-md-12 -->
+		
+	
+	<div id="side_meta">
+		<div class="col-md-3" id="post_meta"> 
+
+	<!-- date -->
+	
+	<div class="meta-widget">
+	<i class="fa fa-clock-o"></i>
+	2016-06-20 
+	</div>
+	
+
+	<!-- categories -->
+    
+	<div class="meta-widget">
+	<a data-toggle="collapse" data-target="#categorys"><i class="fa fa-folder"></i></a>	
+    <ul id="categorys" class="tag_box list-unstyled collapse in">
+          
+  <li>
+    <li><a href="/categories/Android/">Android<span>4</span></a></li>
+  </li>
+
+    </ul>
+	</div>
+	
+
+	<!-- tags -->
+	
+	<div class="meta-widget">
+	<a data-toggle="collapse" data-target="#tags"><i class="fa fa-tags"></i></a>		  
+    <ul id="tags" class="tag_box list-unstyled collapse in">	  
+	    
+  <li><a href="/tags/Android-6-0/">Android 6.0<span>3</span></a></li>
+    </ul>
+	</div>
+		
+
+	<!-- toc -->
+	<div class="meta-widget">
+	
+	   <a data-toggle="collapse" data-target="#toc"><i class="fa fa-bars"></i></a>
+	   <div id="toc" class="toc collapse in">
+			<ol class="toc-article"><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#SnackBar-的简述"><span class="toc-article-text">SnackBar 的简述</span></a></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#SnackBar-的基本使用"><span class="toc-article-text">SnackBar 的基本使用</span></a></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#SnackBar-的颜色改造"><span class="toc-article-text">SnackBar 的颜色改造</span></a></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#SnackBar-的布局改造"><span class="toc-article-text">SnackBar 的布局改造</span></a></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#SnackBar-封装"><span class="toc-article-text">SnackBar 封装</span></a></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#项目地址"><span class="toc-article-text">项目地址</span></a></li></ol>
+		</div>
+	
+	</div>
+	
+    <hr>
+	
+</div><!-- col-md-3 -->
+
+	</div>
+		
+
+</div><!-- row -->
+
+<script type="text/javascript">
+  var duoshuoQuery = { short_name: 'cnlgming' };
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';
+    ds.async = true;
+    ds.src = 'http://static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+</script>
+
+
+
+	</div>
+  </div>
+  <div class="container-narrow">
+  <footer> <p>
+  &copy; 2016 刘广明
+  
+      with help from <a href="http://hexo.io/" target="_blank">Hexo</a> and <a href="http://getbootstrap.com/" target="_blank">Twitter Bootstrap</a>. Theme by <a href="http://github.com/wzpan/hexo-theme-freemind/">Freemind</a>.    
+</p> </footer>
+</div> <!-- container-narrow -->
+  
+
+
+  
+<a id="gotop" href="#">   
+  <span>▲</span> 
+</a>
+
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+<script src="/js/bootstrap.min.js"></script>
+<script src="/js/main.js"></script>
+<script src="/js/search.js"></script> 
+
+
+
+
+   <script type="text/javascript">      
+     var search_path = "search.xml";
+	 if (search_path.length == 0) {
+	 	search_path = "search.xml";
+	 }
+	 var path = "/" + search_path;
+     searchFunc(path, 'local-search-input', 'local-search-result');
+   </script>
+
+</body>
+   </html>

@@ -1,0 +1,341 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>Material_Design_设计语言 | cnLGMing&#39; Blog</title>
+  <meta name="author" content="刘广明">
+  
+  <meta name="description" content="这篇博客是初步接触 Material Design 设计语言后所写。如有不妥之处，欢迎留言，谢谢~">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <meta property="og:title" content="Material_Design_设计语言"/>
+  <meta property="og:site_name" content="cnLGMing&#39; Blog"/>
+
+  
+    <meta property="og:image" content="undefined"/>
+  
+
+  
+  
+    <link href="/favicon.png" rel="icon">
+  
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="/css/themes/bootstrap.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/font-awesome.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/responsive.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/highlight.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/google-fonts.css" media="screen" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+
+  <script src="/js/jquery-2.0.3.min.js"></script>
+
+  <!-- analytics -->
+  
+
+
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?1d8758dd8ddd40e2535e3c3079a729ac";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+</head>
+
+ <body>  
+  <nav id="main-nav" class="navbar navbar-inverse navbar-default navbar-fixed-top" role="navigation">
+    <div class="container">
+      <button type="button" class="navbar-header navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+	<span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+       <a class="navbar-brand" href="/">cnLGMing&#39; Blog</a>
+      <div class="collapse navbar-collapse nav-menu">
+		<ul class="nav navbar-nav">
+		  
+		  <li>
+			<a href="/archives" title="全部文章">
+			  <i class="fa fa-archive"></i>归档
+			</a>
+		  </li>
+		  
+		  <li>
+			<a href="/categories" title="全部分类">
+			  <i class="fa fa-folder"></i>分类
+			</a>
+		  </li>
+		  
+		  <li>
+			<a href="/tags" title="全部标签">
+			  <i class="fa fa-tags"></i>标签
+			</a>
+		  </li>
+		  
+		  <li>
+			<a href="/about" title="关于我">
+			  <i class="fa fa-user"></i>关于我
+			</a>
+		  </li>
+		  
+		</ul>
+      </div>
+    </div> <!-- container -->
+</nav>
+<div class="clearfix"></div>
+
+  <div class="container">
+  	<div class="content">
+    	 
+
+
+	
+		<div class="page-header page-header-inverse ">		
+			<h1 class="title title-inverse "> Material_Design_设计语言</h1>
+		</div>		
+	
+
+
+
+
+
+
+<div class="row post">
+	<!-- cols -->
+	
+	<div id="top_meta"></div>
+	<div class="col-md-9">
+	
+
+	<!-- content -->
+	<div class="mypage">		
+	  
+		 <div class="alert alert-success description">
+			<i class="fa fa-info-circle"></i> <p>这篇博客是初步接触 Material Design 设计语言后所写。如有不妥之处，欢迎留言，谢谢~</p>
+			
+		 </div> <!-- alert -->
+	  		
+
+	  <p>Material Design 是Google在Android 5.0时推出的一个全新的设计语言，它的特点就是拟物扁平化。<a id="more"></a></p>
+<p>[TOC]</p>
+<ul>
+<li>Material Design 是谷歌新的设计语言，谷歌希望寄由此来统一各种平台上的用户体验，Material Design 的特点是干净的排版和简单的布局，以此来突出内容。</li>
+<li>Material Design 对排版、材质、配色、光效、间距、文字大小、交互方式、动画轨迹都做出了建议，以帮助设计者设计出符合 Material Design 风格的应用。</li>
+<li>Material Design 设计语言鼓励大家使用充满活力的鲜艳色彩，并在同一界面建议使用三种色调，并保障有一个强色调，强色一般处于处于视图最底层，例如状态栏或者 actionbar。通过强色调形成鲜明的对比，更容易突出内容的重要性。对于文字色彩的取值，Material Design 建议在浅色背景上采用黑色，在深色背景上采用白色。重要信息和标题采用87%透明度，次要文字采用54%透明度，而更次要的说明文字可以采用26%的透明度。对于想特别突出或者可点击的文字，建议使用强色调。不同层级的视图，可以通过阴影来凸显。对于带有操作且内容突出的区域，可以使用 cardview 进行隔离，对于内容不太重要或者操作比较单一的区域，可以使用分割线进行隔离。</li>
+</ul>
+<h2 id="Material-Design-的使用"><a href="#Material-Design-的使用" class="headerlink" title="Material Design 的使用"></a>Material Design 的使用</h2><ol>
+<li>将应用的 targetSdkVersion 和 minSdkVersion 设置为21(含以上)</li>
+<li>在 values 目录下的 style 资源文件中创建一个 style，让其继承自<br><code>android:Theme.Material</code></li>
+<li>在AndroidManifest中指定应用的主题或者Activity的主题为我们设定的样式</li>
+</ol>
+<h2 id="常用的三种配色风格"><a href="#常用的三种配色风格" class="headerlink" title="常用的三种配色风格"></a>常用的三种配色风格</h2><ul>
+<li>黑色风格：<code>Theme.Material</code></li>
+<li>明亮风格：<code>Theme.Material.Light</code></li>
+<li>明亮主题黑色ActionBar：<code>Theme.Material.Light.DarkActionBar</code></li>
+</ul>
+<h2 id="自定义样式"><a href="#自定义样式" class="headerlink" title="自定义样式"></a>自定义样式</h2><p><img src="http://i.imgur.com/LQ28qXL.png" alt=""></p>
+<ol>
+<li><code>android:colorPrimaryDark</code> 应用的主要暗色调，statusBarColor默认使用该颜色</li>
+<li><code>android:statusBarColor</code> 状态栏颜色，默认使用colorPrimaryDark</li>
+<li><code>android:colorPrimary</code> 应用的主要色调，actionBar默认使用该颜色</li>
+<li><code>android:windowBackground</code> 窗口背景颜色</li>
+<li><code>android:navigationBarColor</code> 底部栏颜色</li>
+<li><code>android:colorForeground</code> 应用的前景色，ListView的分割线，switch滑动区默认使用该颜色</li>
+<li><code>android:colorBackground</code> 应用的背景色，popMenu的背景默认使用该颜色</li>
+<li><code>android:colorAccent</code> 一般控件的选种效果默认采用该颜色</li>
+<li><code>android:colorControlNormal</code> 控件的默认色调　</li>
+<li><code>android:colorControlHighlight</code> 控件按压时的色调</li>
+<li><code>android:colorControlActivated</code> 控件选中时的颜色，默认使用colorAccent</li>
+<li><code>android:colorButtonNormal</code> 默认按钮的背景颜色</li>
+<li><code>android:textColor</code> Button，textView的文字颜色</li>
+<li><code>android:textColorPrimaryDisableOnly</code> RadioButton checkbox等控件的文字</li>
+<li><code>android:textColorPrimary</code> 应用的主要文字颜色，actionBar的标题文字默认使用该颜色</li>
+</ol>
+<blockquote>
+<p>主题不仅可以对<code>Application</code>和<code>Activity</code>使用，也可以对某一个控件单使用，或者是在xml布局中给一个根节点控件设置<code>android:theme</code>属性，来修改它和它所有子控件的主题。 如果我们要对特定控件实例做自定义修改，更建议大家可以通过控件自身的API进行设置修改。</p>
+</blockquote>
+<h2 id="Material-Design兼容性"><a href="#Material-Design兼容性" class="headerlink" title="Material Design兼容性"></a>Material Design兼容性</h2><p>Material Design主题只有在API级别为21以上才可使用，在v7支持库中提供了部分控件的Material Design主题样式，如果想使应用在android的所有版本上都能统一风格，我们可以对控件效果做自定义或者使用一些第三方的兼容包。目前最有效的做法是针对21版本创建value－21资源目录，使用Material Design风格主题，在其他版本使用v7的<code>Theme.AppCompat.Light</code>风格主题。</p>
+<blockquote>
+<p> <strong>作者简介</strong>：</p>
+<p> <strong>刘广明</strong>(<a href="http://weibo.com/u/1665380350" target="_blank" rel="external">@cnLGMing</a>)，一步一步往上爬。</p>
+<p> <a href="http://www.liuguangmingcn.com/" target="_blank" rel="external">个人博客</a> 、<a href="https://github.com/cnLGMing" target="_blank" rel="external">GitHub</a> 、<a href="https://www.zhihu.com/people/LGMing" target="_blank" rel="external">知乎</a></p>
+<p> <strong>文章若有不对之处，欢迎指正，谢谢~</strong></p>
+<p> <strong>版权声明：原创作品，转载时请务必注明原始出处。</strong></p>
+</blockquote>
+	  
+	</div>
+
+	<div>
+  	<center>
+	<div class="pagination">
+<ul class="pagination">
+	 
+				
+    	<li class="prev"><a href="/2016/06/15/TextInputLayout的使用/" class="alignleft prev"><i class="fa fa-arrow-circle-o-left"></i>上一页</a></li>
+  		
+
+        <li><a href="/archives"><i class="fa fa-archive"></i>Archive</a></li>
+
+		
+		   <li class="next"><a href="/2016/06/03/Android中的strings.xml详解/" class="alignright next">下一页<i class="fa fa-arrow-circle-o-right"></i></a></li>         
+        
+	
+</ul>
+</div>
+
+    </center>
+	</div>
+
+    <!-- share -->
+    
+        
+    <div class="bdsharebuttonbox">
+        <a href="#" class="bds_more" data-cmd="more"></a>
+        <a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信"></a>
+        <a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
+        <a href="#" class="bds_fbook" data-cmd="fbook" title="分享到Facebook"></a>
+        <a href="#" class="bds_twi" data-cmd="twi" title="分享到Twitter"></a>
+        <a href="#" class="bds_linkedin" data-cmd="linkedin" title="分享到linkedin"></a>
+        <a href="#" class="bds_evernotecn" data-cmd="evernotecn" title="分享到印象笔记"></a>
+        <a href="#" class="bds_youdao" data-cmd="youdao" title="分享到有道云笔记"></a>
+        <a href="#" class="bds_copy" data-cmd="copy" title="分享到复制网址"></a>
+    </div>
+    <script>
+        window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"1","bdSize":"24"},"share":{}};
+        with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+    </script>
+
+
+        
+
+    
+	
+	<!-- comment -->
+	
+<section id="comment">
+  <h2 class="title">留言</h2>
+
+  
+  	 <div class="ds-thread" data-thread-key="2016/06/10/Material_Design_设计语言/" data-title="Material_Design_设计语言" data-url="http://yoursite.com/2016/06/10/Material_Design_设计语言/"></div>  
+  
+</section>
+
+	</div> <!-- col-md-9/col-md-12 -->
+		
+	
+	<div id="side_meta">
+		<div class="col-md-3" id="post_meta"> 
+
+	<!-- date -->
+	
+	<div class="meta-widget">
+	<i class="fa fa-clock-o"></i>
+	2016-06-10 
+	</div>
+	
+
+	<!-- categories -->
+    
+	<div class="meta-widget">
+	<a data-toggle="collapse" data-target="#categorys"><i class="fa fa-folder"></i></a>	
+    <ul id="categorys" class="tag_box list-unstyled collapse in">
+          
+  <li>
+    <li><a href="/categories/Android/">Android<span>4</span></a></li>
+  </li>
+
+    </ul>
+	</div>
+	
+
+	<!-- tags -->
+	
+	<div class="meta-widget">
+	<a data-toggle="collapse" data-target="#tags"><i class="fa fa-tags"></i></a>		  
+    <ul id="tags" class="tag_box list-unstyled collapse in">	  
+	    
+  <li><a href="/tags/Material-Design/">Material Design<span>1</span></a></li>
+    </ul>
+	</div>
+		
+
+	<!-- toc -->
+	<div class="meta-widget">
+	
+	   <a data-toggle="collapse" data-target="#toc"><i class="fa fa-bars"></i></a>
+	   <div id="toc" class="toc collapse in">
+			<ol class="toc-article"><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#Material-Design-的使用"><span class="toc-article-text">Material Design 的使用</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#常用的三种配色风格"><span class="toc-article-text">常用的三种配色风格</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#自定义样式"><span class="toc-article-text">自定义样式</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#Material-Design兼容性"><span class="toc-article-text">Material Design兼容性</span></a></li></ol>
+		</div>
+	
+	</div>
+	
+    <hr>
+	
+</div><!-- col-md-3 -->
+
+	</div>
+		
+
+</div><!-- row -->
+
+<script type="text/javascript">
+  var duoshuoQuery = { short_name: 'cnlgming' };
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';
+    ds.async = true;
+    ds.src = 'http://static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+</script>
+
+
+
+	</div>
+  </div>
+  <div class="container-narrow">
+  <footer> <p>
+  &copy; 2016 刘广明
+  
+      with help from <a href="http://hexo.io/" target="_blank">Hexo</a> and <a href="http://getbootstrap.com/" target="_blank">Twitter Bootstrap</a>. Theme by <a href="http://github.com/wzpan/hexo-theme-freemind/">Freemind</a>.    
+</p> </footer>
+</div> <!-- container-narrow -->
+  
+
+
+  
+<a id="gotop" href="#">   
+  <span>▲</span> 
+</a>
+
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+<script src="/js/bootstrap.min.js"></script>
+<script src="/js/main.js"></script>
+<script src="/js/search.js"></script> 
+
+
+
+
+   <script type="text/javascript">      
+     var search_path = "search.xml";
+	 if (search_path.length == 0) {
+	 	search_path = "search.xml";
+	 }
+	 var path = "/" + search_path;
+     searchFunc(path, 'local-search-input', 'local-search-result');
+   </script>
+
+</body>
+   </html>
