@@ -4,6 +4,63 @@
   
     
     <entry>
+      <title><![CDATA[adb常用命令]]></title>
+      <url>http://yoursite.com/2016/07/25/adb%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/</url>
+      <content type="html"><![CDATA[<p>熟练使用 <strong>adb 命令</strong> 有助于提高开发效率。 很多公司在面试时也会询问有没有用过 adb 命令，常用的有哪些？若能脱口而出，直接说明你经常使用。</p>
+<a id="more"></a>
+<p>不多说，直接上命令了。</p>
+<hr>
+<ul>
+<li><strong>启动 adb 服务：</strong><code>adb start-server</code></li>
+<li><strong>关闭 adb 服务：</strong><code>adb kill-server</code></li>
+<li><strong>查看所有连接成功的设备：</strong><code>adb devices</code></li>
+</ul>
+<hr>
+<blockquote>
+<p><strong>以下命令，若只有一台设备，可忽略命令中的 <code>-s 设备名</code></strong>。</p>
+</blockquote>
+<p>例如：<strong>进入指定在线设备的 shell：</strong><code>adb -s 设备名 shell</code>【若只有一台，可直接使用：<code>adb shell</code>】</p>
+<ul>
+<li><strong>进入指定在线设备的 shell：</strong><code>adb -s 设备名 shell</code></li>
+<li><strong>重启手机：</strong><code>adb -s 设备名 reboot</code></li>
+<li><strong>重启到bootloader,即刷机模式：</strong><code>adb -s 设备名 reboot bootloader</code></li>
+<li><strong>重启到 recovery，即恢复模式：</strong><code>adb -s 设备名 recovery</code></li>
+<li><strong>查看 logcat：</strong> <code>adb -s 设备名 logcat</code></li>
+<li><strong>清除 log 缓存：</strong><code>adb -s 设备名 logcat -c</code></li>
+<li><strong>安装 APP：</strong><code>adb -s 设备名 install -r xxx.apk</code>(xxx表示 apk 的全路径，通常情况下，输入完-r后直接将apk 拖到命令窗口)</li>
+<li><strong>卸载 APP：</strong><code>adb -s 设备名 uninstall 包名</code></li>
+<li><strong>将手机中的文件复制出来：</strong><code>adb -s 设备名 pull 文件全路径 目的地全路径</code></li>
+<li><strong>向手机发送文件：</strong><code>adb -s 设备名 push 文件全路径 目的地全路径</code></li>
+</ul>
+<hr>
+<blockquote>
+<p><strong>以下命令，若没有进入到设备的 shell，需要在最前面添加 <code>adb -s 设备名 shell</code> 才能执行</strong></p>
+</blockquote>
+<ul>
+<li><strong>清除指定应用的数据：</strong><code>pm clear 包名</code></li>
+<li><strong>启动某个应用的某个 Activity：</strong><code>am start -n 包名/包名.Activity名</code></li>
+<li><strong>查看进程信息：</strong><code>ps</code></li>
+<li><strong>查看所有已安装的应用的包名：</strong><code>pm list packages -f</code></li>
+<li><strong>查看栈顶 Activity，可以用来获取包名，可以用来查看其它 APP 的包名：</strong><code>dumpsys activity top</code></li>
+<li><strong>内存使用情况 Memory Usage：</strong><code>dumpsys meminfo</code></li>
+<li><strong>包信息 Package Information：</strong><code>dumpsys package</code></li>
+<li><strong>查看手机 CPU 以及手机架构：</strong><code>cat /proc/cpuinfo</code></li>
+<li><strong>刷新一次内存信息，然后返回：</strong><code>top -n 1</code></li>
+<li><strong>查看 WiFi 密码：</strong><code>cat /data/misc/wifi/*.conf</code>(需要权限)</li>
+</ul>
+<hr>
+<blockquote>
+<p><strong>作者简介</strong>：</p>
+<p><strong>刘广明</strong>(<a href="http://weibo.com/u/1665380350" target="_blank" rel="external">@cnLGMing</a>)，一步一步往上爬。</p>
+<p><a href="http://www.liuguangmingcn.com/" target="_blank" rel="external">个人博客</a> 、<a href="https://github.com/cnLGMing" target="_blank" rel="external">GitHub</a> 、<a href="https://www.zhihu.com/people/LGMing" target="_blank" rel="external">知乎</a></p>
+<p><strong>邮箱：liuguangmingcn@163.com</strong></p>
+<p><strong>文章若有不对之处，欢迎留言指正，谢谢~</strong></p>
+<p><strong>版权声明：原创作品，转载时请务必注明原始出处。</strong></p>
+</blockquote>
+]]></content>
+    </entry>
+    
+    <entry>
       <title><![CDATA[zxing的简单使用]]></title>
       <url>http://yoursite.com/2016/07/23/zxing%E7%9A%84%E7%AE%80%E5%8D%95%E4%BD%BF%E7%94%A8/</url>
       <content type="html"><![CDATA[<p>业内都说没有二维码扫描及生成的 APP，不是一个好的 APP，为了不掉队，学习了 Google 员工的 <a href="https://github.com/zxing/zxing" target="_blank" rel="external">zxing</a> 的开源项目。由于本人能力有限， <a href="https://github.com/zxing/zxing" target="_blank" rel="external">zxing</a> 项目实在超出了本人的范围，我只选取了 二维码扫描、解析及生成的代码。<br><a id="more"></a></p>

@@ -1,0 +1,346 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>adb常用命令 | cnLGMing&#39; Blog</title>
+  <meta name="author" content="刘广明">
+  
+  <meta name="description" content="这篇博客是总结下常用的 `adb命令`。如有不妥之处，欢迎留言指正，谢谢~">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <meta property="og:title" content="adb常用命令"/>
+  <meta property="og:site_name" content="cnLGMing&#39; Blog"/>
+
+  
+    <meta property="og:image" content="undefined"/>
+  
+
+  
+  
+    <link href="/favicon.png" rel="icon">
+  
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="/css/themes/bootstrap.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/font-awesome.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/responsive.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/highlight.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/google-fonts.css" media="screen" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+
+  <script src="/js/jquery-2.0.3.min.js"></script>
+
+  <!-- analytics -->
+  
+
+
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?1d8758dd8ddd40e2535e3c3079a729ac";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+</head>
+
+ <body>  
+  <nav id="main-nav" class="navbar navbar-inverse navbar-default navbar-fixed-top" role="navigation">
+    <div class="container">
+      <button type="button" class="navbar-header navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+	<span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+       <a class="navbar-brand" href="/">cnLGMing&#39; Blog</a>
+      <div class="collapse navbar-collapse nav-menu">
+		<ul class="nav navbar-nav">
+		  
+		  <li>
+			<a href="/archives" title="全部文章">
+			  <i class="fa fa-archive"></i>归档
+			</a>
+		  </li>
+		  
+		  <li>
+			<a href="/categories" title="全部分类">
+			  <i class="fa fa-folder"></i>分类
+			</a>
+		  </li>
+		  
+		  <li>
+			<a href="/tags" title="全部标签">
+			  <i class="fa fa-tags"></i>标签
+			</a>
+		  </li>
+		  
+		  <li>
+			<a href="/about" title="关于我">
+			  <i class="fa fa-user"></i>关于我
+			</a>
+		  </li>
+		  
+		</ul>
+      </div>
+    </div> <!-- container -->
+</nav>
+<div class="clearfix"></div>
+
+  <div class="container">
+  	<div class="content">
+    	 
+
+
+	
+		<div class="page-header page-header-inverse ">		
+			<h1 class="title title-inverse "> adb常用命令</h1>
+		</div>		
+	
+
+
+
+
+
+
+<div class="row post">
+	<!-- cols -->
+	
+	<div id="top_meta"></div>
+	<div class="col-md-9">
+	
+
+	<!-- content -->
+	<div class="mypage">		
+	  
+		 <div class="alert alert-success description">
+			<i class="fa fa-info-circle"></i> <p>这篇博客是总结下常用的 <code>adb命令</code>。如有不妥之处，欢迎留言指正，谢谢~</p>
+			
+		 </div> <!-- alert -->
+	  		
+
+	  <p>熟练使用 <strong>adb 命令</strong> 有助于提高开发效率。 很多公司在面试时也会询问有没有用过 adb 命令，常用的有哪些？若能脱口而出，直接说明你经常使用。</p>
+<a id="more"></a>
+<p>不多说，直接上命令了。</p>
+<hr>
+<ul>
+<li><strong>启动 adb 服务：</strong><code>adb start-server</code></li>
+<li><strong>关闭 adb 服务：</strong><code>adb kill-server</code></li>
+<li><strong>查看所有连接成功的设备：</strong><code>adb devices</code></li>
+</ul>
+<hr>
+<blockquote>
+<p><strong>以下命令，若只有一台设备，可忽略命令中的 <code>-s 设备名</code></strong>。</p>
+</blockquote>
+<p>例如：<strong>进入指定在线设备的 shell：</strong><code>adb -s 设备名 shell</code>【若只有一台，可直接使用：<code>adb shell</code>】</p>
+<ul>
+<li><strong>进入指定在线设备的 shell：</strong><code>adb -s 设备名 shell</code></li>
+<li><strong>重启手机：</strong><code>adb -s 设备名 reboot</code></li>
+<li><strong>重启到bootloader,即刷机模式：</strong><code>adb -s 设备名 reboot bootloader</code></li>
+<li><strong>重启到 recovery，即恢复模式：</strong><code>adb -s 设备名 recovery</code></li>
+<li><strong>查看 logcat：</strong> <code>adb -s 设备名 logcat</code></li>
+<li><strong>清除 log 缓存：</strong><code>adb -s 设备名 logcat -c</code></li>
+<li><strong>安装 APP：</strong><code>adb -s 设备名 install -r xxx.apk</code>(xxx表示 apk 的全路径，通常情况下，输入完-r后直接将apk 拖到命令窗口)</li>
+<li><strong>卸载 APP：</strong><code>adb -s 设备名 uninstall 包名</code></li>
+<li><strong>将手机中的文件复制出来：</strong><code>adb -s 设备名 pull 文件全路径 目的地全路径</code></li>
+<li><strong>向手机发送文件：</strong><code>adb -s 设备名 push 文件全路径 目的地全路径</code></li>
+</ul>
+<hr>
+<blockquote>
+<p><strong>以下命令，若没有进入到设备的 shell，需要在最前面添加 <code>adb -s 设备名 shell</code> 才能执行</strong></p>
+</blockquote>
+<ul>
+<li><strong>清除指定应用的数据：</strong><code>pm clear 包名</code></li>
+<li><strong>启动某个应用的某个 Activity：</strong><code>am start -n 包名/包名.Activity名</code></li>
+<li><strong>查看进程信息：</strong><code>ps</code></li>
+<li><strong>查看所有已安装的应用的包名：</strong><code>pm list packages -f</code></li>
+<li><strong>查看栈顶 Activity，可以用来获取包名，可以用来查看其它 APP 的包名：</strong><code>dumpsys activity top</code></li>
+<li><strong>内存使用情况 Memory Usage：</strong><code>dumpsys meminfo</code></li>
+<li><strong>包信息 Package Information：</strong><code>dumpsys package</code></li>
+<li><strong>查看手机 CPU 以及手机架构：</strong><code>cat /proc/cpuinfo</code></li>
+<li><strong>刷新一次内存信息，然后返回：</strong><code>top -n 1</code></li>
+<li><strong>查看 WiFi 密码：</strong><code>cat /data/misc/wifi/*.conf</code>(需要权限)</li>
+</ul>
+<hr>
+<blockquote>
+<p><strong>作者简介</strong>：</p>
+<p><strong>刘广明</strong>(<a href="http://weibo.com/u/1665380350" target="_blank" rel="external">@cnLGMing</a>)，一步一步往上爬。</p>
+<p><a href="http://www.liuguangmingcn.com/" target="_blank" rel="external">个人博客</a> 、<a href="https://github.com/cnLGMing" target="_blank" rel="external">GitHub</a> 、<a href="https://www.zhihu.com/people/LGMing" target="_blank" rel="external">知乎</a></p>
+<p><strong>邮箱：liuguangmingcn@163.com</strong></p>
+<p><strong>文章若有不对之处，欢迎留言指正，谢谢~</strong></p>
+<p><strong>版权声明：原创作品，转载时请务必注明原始出处。</strong></p>
+</blockquote>
+	  
+	</div>
+
+	<div>
+  	<center>
+	<div class="pagination">
+<ul class="pagination">
+	 
+		
+          <li class="prev disabled"><a><i class="fa fa-arrow-circle-o-left"></i>上一页</a></li>
+        
+
+        <li><a href="/archives"><i class="fa fa-archive"></i>Archive</a></li>
+
+		
+		   <li class="next"><a href="/2016/07/23/zxing的简单使用/" class="alignright next">下一页<i class="fa fa-arrow-circle-o-right"></i></a></li>         
+        
+	
+</ul>
+</div>
+
+    </center>
+	</div>
+
+    <!-- share -->
+    
+        
+    <div class="bdsharebuttonbox">
+        <a href="#" class="bds_more" data-cmd="more"></a>
+        <a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信"></a>
+        <a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
+        <a href="#" class="bds_fbook" data-cmd="fbook" title="分享到Facebook"></a>
+        <a href="#" class="bds_twi" data-cmd="twi" title="分享到Twitter"></a>
+        <a href="#" class="bds_linkedin" data-cmd="linkedin" title="分享到linkedin"></a>
+        <a href="#" class="bds_evernotecn" data-cmd="evernotecn" title="分享到印象笔记"></a>
+        <a href="#" class="bds_youdao" data-cmd="youdao" title="分享到有道云笔记"></a>
+        <a href="#" class="bds_copy" data-cmd="copy" title="分享到复制网址"></a>
+    </div>
+    <script>
+        window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"1","bdSize":"24"},"share":{}};
+        with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+    </script>
+
+
+        
+
+    
+	
+	<!-- comment -->
+	
+<section id="comment">
+  <h2 class="title">留言</h2>
+
+  
+  	 <div class="ds-thread" data-thread-key="2016/07/25/adb常用命令/" data-title="adb常用命令" data-url="http://yoursite.com/2016/07/25/adb常用命令/"></div>  
+  
+</section>
+
+	</div> <!-- col-md-9/col-md-12 -->
+		
+	
+	<div id="side_meta">
+		<div class="col-md-3" id="post_meta"> 
+
+	<!-- date -->
+	
+	<div class="meta-widget">
+	<i class="fa fa-clock-o"></i>
+	2016-07-25 
+	</div>
+	
+
+	<!-- categories -->
+    
+	<div class="meta-widget">
+	<a data-toggle="collapse" data-target="#categorys"><i class="fa fa-folder"></i></a>	
+    <ul id="categorys" class="tag_box list-unstyled collapse in">
+          
+  <li>
+    <li><a href="/categories/Android/">Android<span>7</span></a></li>
+  </li>
+
+    </ul>
+	</div>
+	
+
+	<!-- tags -->
+	
+	<div class="meta-widget">
+	<a data-toggle="collapse" data-target="#tags"><i class="fa fa-tags"></i></a>		  
+    <ul id="tags" class="tag_box list-unstyled collapse in">	  
+	    
+  <li><a href="/tags/adb/">adb<span>1</span></a></li>
+    </ul>
+	</div>
+		
+
+	<!-- toc -->
+	<div class="meta-widget">
+	
+	   <a data-toggle="collapse" data-target="#toc"><i class="fa fa-bars"></i></a>
+	   <div id="toc" class="toc collapse in">
+			
+		</div>
+	
+	</div>
+	
+    <hr>
+	
+</div><!-- col-md-3 -->
+
+	</div>
+		
+
+</div><!-- row -->
+
+<script type="text/javascript">
+  var duoshuoQuery = { short_name: 'cnlgming' };
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';
+    ds.async = true;
+    ds.src = 'http://static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+</script>
+
+
+
+	</div>
+  </div>
+  <div class="container-narrow">
+  <footer> <p>
+  &copy; 2016 刘广明
+  
+      with help from <a href="http://hexo.io/" target="_blank">Hexo</a> and <a href="http://getbootstrap.com/" target="_blank">Twitter Bootstrap</a>. Theme by <a href="http://github.com/wzpan/hexo-theme-freemind/">Freemind</a>.    
+</p> </footer>
+</div> <!-- container-narrow -->
+  
+
+
+  
+<a id="gotop" href="#">   
+  <span>▲</span> 
+</a>
+
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+<script src="/js/bootstrap.min.js"></script>
+<script src="/js/main.js"></script>
+<script src="/js/search.js"></script> 
+
+
+
+
+   <script type="text/javascript">      
+     var search_path = "search.xml";
+	 if (search_path.length == 0) {
+	 	search_path = "search.xml";
+	 }
+	 var path = "/" + search_path;
+     searchFunc(path, 'local-search-input', 'local-search-result');
+   </script>
+
+</body>
+   </html>
