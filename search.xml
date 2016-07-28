@@ -4,6 +4,52 @@
   
     
     <entry>
+      <title><![CDATA[面试_03]]></title>
+      <url>http://yoursite.com/2016/07/28/%E9%9D%A2%E8%AF%95-03/</url>
+      <content type="html"><![CDATA[<p>面试 Android 游戏 SDK 开发<br><a id="more"></a></p>
+<ul>
+<li>公司：深圳乐聚互动科技有限公司</li>
+<li>职位：Android SDK 开发工程师</li>
+<li>时间：2016/07/27 11:10</li>
+</ul>
+<h1 id="笔试"><a href="#笔试" class="headerlink" title="笔试"></a>笔试</h1><ul>
+<li>什么是嵌入式实时操作系统？Android 操作系统属于实时操作系统吗？</li>
+<li>描述一下 Android 的系统架构</li>
+<li>Android 的数据存储方式有哪些？</li>
+<li>简述下 ContentProvider 是如何实现数据共享的</li>
+<li>如何讲一个 Activity 设置为窗口样式？</li>
+<li>Android 中常用的五种布局</li>
+<li>简述下 Activity 的生命周期</li>
+<li>简述下 Activity 应用程序结构是哪些？</li>
+<li>请继承 SQLiteOpenHelper 实现<ul>
+<li>创建一个版本为 <strong>1</strong> 的 <strong>“diaryOpenHelper.db”</strong> 的数据库</li>
+<li>同时创建一个 <strong>“diary”</strong> 表（包含一个 _id 主键并自增长、topic 字符型100长度、content 字符型100长度）</li>
+<li>在数据库版本变化时，请删除 diary 表，并重新创建 diary 表</li>
+</ul>
+</li>
+</ul>
+<h1 id="面试"><a href="#面试" class="headerlink" title="面试"></a>面试</h1><ul>
+<li>如何处理野指针</li>
+<li>如何进行控制内存以及优化</li>
+<li>支付宝、网银支付丢失订单怎么办</li>
+<li>MySQL 会吗？怎么优化</li>
+<li>没有处理到的异常需要怎么做，才能防止 APP 异常退出</li>
+<li>会算法吗？会哪些？</li>
+<li>有独立开发的能力吗？</li>
+</ul>
+<hr>
+<blockquote>
+<p><strong>作者简介</strong>：</p>
+<p><strong>刘广明</strong>(<a href="http://weibo.com/u/1665380350" target="_blank" rel="external">@cnLGMing</a>)，一步一步往上爬。</p>
+<p><a href="http://www.liuguangmingcn.com/" target="_blank" rel="external">个人博客</a> 、<a href="https://github.com/cnLGMing" target="_blank" rel="external">GitHub</a> 、<a href="https://www.zhihu.com/people/LGMing" target="_blank" rel="external">知乎</a></p>
+<p><strong>邮箱：liuguangmingcn@163.com</strong></p>
+<p><strong>文章若有不对之处，欢迎指正，谢谢~</strong></p>
+<p><strong>版权声明：原创作品，转载时请务必注明原始出处。</strong></p>
+</blockquote>
+]]></content>
+    </entry>
+    
+    <entry>
       <title><![CDATA[[转]写给即将和终将毕业的程序员们]]></title>
       <url>http://yoursite.com/2016/07/26/%E8%BD%AC-%E5%86%99%E7%BB%99%E5%8D%B3%E5%B0%86%E5%92%8C%E7%BB%88%E5%B0%86%E6%AF%95%E4%B8%9A%E7%9A%84%E7%A8%8B%E5%BA%8F%E5%91%98%E4%BB%AC/</url>
       <content type="html"><![CDATA[<p>这篇文章大概需要花费8分钟的时间，看后会有些许的收获。</p>
