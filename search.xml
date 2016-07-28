@@ -20,7 +20,7 @@
 <li>如何讲一个 Activity 设置为窗口样式？</li>
 <li>Android 中常用的五种布局</li>
 <li>简述下 Activity 的生命周期</li>
-<li>简述下 Activity 应用程序结构是哪些？</li>
+<li>简述下 Android 应用程序结构是哪些？</li>
 <li>请继承 SQLiteOpenHelper 实现<ul>
 <li>创建一个版本为 <strong>1</strong> 的 <strong>“diaryOpenHelper.db”</strong> 的数据库</li>
 <li>同时创建一个 <strong>“diary”</strong> 表（包含一个 _id 主键并自增长、topic 字符型100长度、content 字符型100长度）</li>
