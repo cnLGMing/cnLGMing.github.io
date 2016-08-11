@@ -137,10 +137,10 @@ var _hmt = _hmt || [];
 <li>listener：是指监听传感器的时间监听器，需要实现 <code>SensorEventListener 接口</code>;</li>
 <li>sensor：是指传感器对象;</li>
 <li>samplingPeriodUs：是指传感器数值的刷新频率，有以下4种：<ul>
-<li><code>SENSOR\_DELAY\_FASTEST = 0</code> ：最快，即延迟最小咯。只有特别依赖传感器数据的应用推荐采用这个频率。缺点：耗电、由于传递的是原始数据，所以算法处理不好将会影响应用的性能。</li>
-<li><code>SENSOR\_DELAY\_GAME = 1</code> : 顾名思义，适合游戏的刷新频率，能够适合实时性的需求。</li>
-<li><code>SENSOR\_DELAY\_NORMAL = 3</code> : 正常频率，适用于对实时性不是特别高的应用。</li>
-<li><code>SENSOR\_DELAY\_UI = 2</code> : 很明显，这个适用于用户界面更新的频率，具有省电、开销小的优点，缺点就是延迟大。</li>
+<li><code>SENSOR_DELAY_FASTEST = 0</code> ：最快，即延迟最小咯。只有特别依赖传感器数据的应用推荐采用这个频率。缺点：耗电、由于传递的是原始数据，所以算法处理不好将会影响应用的性能。</li>
+<li><code>SENSOR_DELAY_GAME = 1</code> : 顾名思义，适合游戏的刷新频率，能够适合实时性的需求。</li>
+<li><code>SENSOR_DELAY_NORMAL = 3</code> : 正常频率，适用于对实时性不是特别高的应用。</li>
+<li><code>SENSOR_DELAY_UI = 2</code> : 很明显，这个适用于用户界面更新的频率，具有省电、开销小的优点，缺点就是延迟大。</li>
 </ul>
 </li>
 </ul>
