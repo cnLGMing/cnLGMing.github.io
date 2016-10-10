@@ -4,6 +4,43 @@
   
     
     <entry>
+      <title><![CDATA[Android_settings.db_添加新字段]]></title>
+      <url>http://yoursite.com/2016/10/10/Android-settings-db-%E6%B7%BB%E5%8A%A0%E6%96%B0%E5%AD%97%E6%AE%B5/</url>
+      <content type="html"><![CDATA[<p><code>Settings</code> 对于 Android 系统工程师来说，是一个经常需要改动的部分之一。这两天都是看 Settings 的源码，就我个人而言，Settings 整个项目的代码量还是挺多的。你觉得呢？</p>
+<a id="more"></a>
+<p>那如何给 Android 的 <code>settings.db</code> 数据库添加新的字段？接下来，我就说说我是怎么做的。如有不妥之处，欢迎留言，谢谢~</p>
+<hr>
+<h1 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h1><p>今天遇到这样一个需求：在 Android 的 settings.db 中添加一个新字段，用于保存一个特殊含义的值。这里假设是需要保存 wifi mac address。</p>
+<hr>
+<h1 id="简述"><a href="#简述" class="headerlink" title="简述"></a>简述</h1><p>Settings 的数据都是保存在Android系统中的 <code>data/data/com.android.providers.settings/databases/settings.db</code> 数据库中(可以通过 <code>DDMS</code> 或使用命令查看，当然前提是有 <strong>root 权限</strong>)，而这些数据的默认值则是在 Android 源码中 <code>frameworks/base/packages/SettingsProvider/res/values/defaults.xml</code> 文件中定义的。</p>
+<hr>
+<h1 id="如何添加新字段"><a href="#如何添加新字段" class="headerlink" title="如何添加新字段"></a>如何添加新字段</h1><p>如果需要在 settings.db 中添加新的字段，可以通过以下步骤进行实现[这里假设需要添加保存 wifi mac address 的字段]：</p>
+<h2 id="第一步"><a href="#第一步" class="headerlink" title="第一步"></a>第一步</h2><p>在 <code>defaults.xml</code> 中为新字段的数据定义一个默认值(也可以通过代码进行设置)</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">string</span> <span class="attr">name</span>=<span class="string">"def_save_wifi_mac"</span>&gt;</span>00:00:00:00:00:00<span class="tag">&lt;/<span class="name">string</span>&gt;</span></div><div class="line"></div><div class="line">Tips：(需要与第二步中的类型对应)</div><div class="line">字符串类型：string，例如：`<span class="tag">&lt;<span class="name">string</span> <span class="attr">name</span>=<span class="string">"def_save_wifi_mac"</span>&gt;</span>00:00:00:00:00:00<span class="tag">&lt;/<span class="name">string</span>&gt;</span>`</div><div class="line">布尔类型：bool，例如源码中：`<span class="tag">&lt;<span class="name">bool</span> <span class="attr">name</span>=<span class="string">"def_wifi_on"</span>&gt;</span>false<span class="tag">&lt;/<span class="name">bool</span>&gt;</span>`</div><div class="line">整型：integer，例如源码中：`<span class="tag">&lt;<span class="name">integer</span> <span class="attr">name</span>=<span class="string">"def_wifi_sleep_policy"</span>&gt;</span>2<span class="tag">&lt;/<span class="name">integer</span>&gt;</span>`</div><div class="line">小数：fraction，例如源码中：`<span class="tag">&lt;<span class="name">fraction</span> <span class="attr">name</span>=<span class="string">"def_window_animation_scale"</span>&gt;</span>100%<span class="tag">&lt;/<span class="name">fraction</span>&gt;</span>`</div></pre></td></tr></table></figure>
+<h2 id="第二步"><a href="#第二步" class="headerlink" title="第二步"></a>第二步</h2><p>仅仅在给默认值是不行的，还需要在 <code>DatabaseHelper.java</code> 中的 <code>loadSystemSettings(SQLiteDatabase db)</code> 方法中添加字段</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// 路径：Android 源码中的 </span></div><div class="line"><span class="comment">// frameworks/base/packages/SettingsProvider/src/com/android/providers/settings/DatabaseHelper.java</span></div><div class="line"><span class="comment">// loadSystemSettings(SQLiteDatabase db)方法中添加新字段</span></div><div class="line"><span class="comment">/**</span></div><div class="line"> * 第一个参数：SQLiteStatement(默认写stmt)</div><div class="line"> * 第二个参数：新添加字段的名称</div><div class="line"> * 第三个参数：新字段的默认值(即，在第一步中添加的默认值)</div><div class="line"> */</div><div class="line">loadStringSetting(stmt, <span class="string">"wifi_mac_address"</span>, R.string.def_save_wifi_mac);</div><div class="line"></div><div class="line">Tips:(需要与第一步中的类型对应)</div><div class="line">获取字符串类型：loadStringSetting(stmt, 新字段名称, R.string.默认值名称)</div><div class="line">获取布尔类型：loadBooleanSetting(stmt, 新字段名称 ,R.bool.默认值名称)</div><div class="line">获取整型：loadIntegerSetting(stmt, 新字段名称 ,R.integer.默认值名称)</div><div class="line">获取小数：loadFractionSetting(stmt, 新字段名称 ,R.fraction.默认值名称)</div></pre></td></tr></table></figure>
+<h2 id="第三步"><a href="#第三步" class="headerlink" title="第三步"></a>第三步</h2><p>重新编译一个 SettingsProvider.apk，覆盖安装即可</p>
+<h2 id="第四步"><a href="#第四步" class="headerlink" title="第四步"></a>第四步</h2><p>经过前面三个步骤，理论上就已经添加完了，那是否成功呢？现在就来检验下，检验有三种方法，</p>
+<h3 id="借助-DDNS-检验"><a href="#借助-DDNS-检验" class="headerlink" title="借助 DDNS 检验"></a>借助 DDNS 检验</h3><p>settings.db 数据库的路径是：<code>data/data/com.android.providers.settings/settings.db</code> ,然后将数据库导出，进行验证</p>
+<h3 id="代码检验"><a href="#代码检验" class="headerlink" title="代码检验"></a>代码检验</h3><p>在 APP 中可以通过 <code>Settings.System</code> 中的 get 和 put 方法获取和设置，验证是否有新字段</p>
+<img src="/2016/10/10/Android-settings-db-添加新字段/get.png" alt="获取方法" title="获取方法">
+<img src="/2016/10/10/Android-settings-db-添加新字段/put.png" alt="设置方法" title="设置方法">
+<h3 id="adb-shell-命令检验"><a href="#adb-shell-命令检验" class="headerlink" title="adb shell 命令检验"></a>adb shell 命令检验</h3><p>settings.db 数据库的路径是：<code>data/data/com.android.providers.settings/settings.db</code> ,然后通过 sqlite3 进行查看，是否有新字段</p>
+<hr>
+<p>到此，此篇博文就到尾声了。希望对你有所帮助，若本文有误或你有更好的方法，欢迎留言，谢谢~</p>
+<hr>
+<blockquote>
+<p><strong>作者简介</strong>：</p>
+<p><strong>刘广明</strong>(<a href="http://weibo.com/u/1665380350" target="_blank" rel="external">@cnLGMing</a>)，一步一步往上爬。</p>
+<p><a href="http://www.liuguangmingcn.com/" target="_blank" rel="external">个人博客</a> 、<a href="https://github.com/cnLGMing" target="_blank" rel="external">GitHub</a> 、<a href="https://www.zhihu.com/people/LGMing" target="_blank" rel="external">知乎</a></p>
+<p><strong>邮箱：liuguangmingcn@163.com</strong></p>
+<p><strong>文章若有不对之处，欢迎指正，谢谢~</strong></p>
+<p><strong>版权声明：原创作品，转载时请务必注明原始出处。</strong></p>
+</blockquote>
+]]></content>
+    </entry>
+    
+    <entry>
       <title><![CDATA[Android传感器(中)]]></title>
       <url>http://yoursite.com/2016/08/21/Android%E4%BC%A0%E6%84%9F%E5%99%A8(%E4%B8%AD)/</url>
       <content type="html"><![CDATA[<p>在 <a href="http://www.liuguangmingcn.com/2016/08/11/Android%E4%BC%A0%E6%84%9F%E5%99%A8-%E4%B8%8A/" target="_blank" rel="external">Android 传感器(上)</a> 博客中，只是简单介绍了 Android 常见的几种传感器，且只是拿光线传感器做了个例子，但是没有进一步讲解其他传感器。现在就来讲讲其他常用的传感器。</p>
