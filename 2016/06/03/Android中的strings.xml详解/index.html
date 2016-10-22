@@ -176,8 +176,7 @@ var _hmt = _hmt || [];
 <ol>
 <li>通过 <a href="https://developer.android.com/guide/topics/resources/string-resource.html#Plurals" target="_blank" rel="external">Android提供的API</a> 可以发现，语言之间的复数是有差异，而且很容易搞混。<code>quantity</code> 中各合法值的解释：<br><img src="https://ooo.0o0.ooo/2016/06/20/5768adb4592bc.png" alt="1.png"></li>
 <li>当 <code>item</code> 中有单引号或双引号时，需要进行转义；</li>
-<li>当 <code>item</code> 中，包含了数字格式的字符串 <code>%d</code> ,则在获取时需要传递两个参数，如上面的两个 <strong>count</strong> ，第一个 count 用于显示合适的字符串；第二个 count 用于插入到占位符 <code>%d</code> 中。</li>
-<li>如果需要显示<code>%</code>，需要使用 <code>%%</code> ，转译一下 </li>
+<li>当 <code>item</code> 中，包含了数字格式的字符串 <code>%d</code> ,则在获取时需要传递两个参数，如上面的两个 <strong>count</strong> ，第一个 count 用于显示合适的字符串；第二个 count 用于插入到占位符 <code>%d</code> 中。 </li>
 </ol>
 <hr>
 <h3 id="添加特殊符号"><a href="#添加特殊符号" class="headerlink" title="添加特殊符号"></a>添加特殊符号</h3><p>在 <strong>strings.xml</strong> 中，有些字符是不能直接表示出来的。比如：空格。</p>
@@ -188,7 +187,10 @@ var _hmt = _hmt || [];
 <p><strong>wiki：</strong></p>
 <ol>
 <li>当不能直接表示出来时，使用 <strong>ASCII 码</strong> 进行表示。格式：<code>&amp;#ASCII码;</code></li>
+<li>当不能直接表示出来时，使用 <strong>Unicode 码</strong> 进行表示。格式：<code>\u码值</code></li>
+<li>可以设置<code>formatted=&quot;false&quot;</code></li>
 </ol>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">string</span> <span class="attr">name</span>=<span class="string">"demo1"</span> <span class="attr">formatted</span>=<span class="string">"false"</span>&gt;</span>目前的百分比为10%，预期是20%<span class="tag">&lt;/<span class="name">string</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">string</span> <span class="attr">name</span>=<span class="string">"demo2"</span>&gt;</span>目前的百分比为10&amp;#37;，预期是20&amp;#37;<span class="tag">&lt;/<span class="name">string</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">string</span> <span class="attr">name</span>=<span class="string">"demo3"</span>&gt;</span>目前的百分比为10\u0025 ;，预期是20\u0025;<span class="tag">&lt;/<span class="name">string</span>&gt;</span></div></pre></td></tr></table></figure>
 <hr>
 <h3 id="使用-HTML-样式"><a href="#使用-HTML-样式" class="headerlink" title="使用 HTML 样式"></a>使用 HTML 样式</h3><p>在某种特定的场景，我们需要强调一些关键字/词，需要进行加粗或颜色修改等操作。这个时候，为了减少控件，使这句话就在同一个 string 中，我们可以使用 HTML 样式对字符串进行修饰。</p>
 <ul>
