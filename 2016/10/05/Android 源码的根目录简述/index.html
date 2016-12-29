@@ -1,0 +1,434 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>Android 源码的根目录描述 | cnLGMing&#39;s Blog</title>
+  <meta name="author" content="刘广明">
+  
+  <meta name="description" content="不知不觉，从 Android 应用层转到 Framework 层，已经有接近两个月了。">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <meta property="og:title" content="Android 源码的根目录描述"/>
+  <meta property="og:site_name" content="cnLGMing&#39;s Blog"/>
+
+  
+    <meta property="og:image" content="undefined"/>
+  
+
+  
+  
+    <link href="/favicon.png" rel="icon">
+  
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="/css/themes/bootstrap.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/font-awesome.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/responsive.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/highlight.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/google-fonts.css" media="screen" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+
+  <script src="/js/jquery-2.0.3.min.js"></script>
+
+  <!-- analytics -->
+  
+
+
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?1d8758dd8ddd40e2535e3c3079a729ac";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+</head>
+
+ <body>  
+  <nav id="main-nav" class="navbar navbar-inverse navbar-default navbar-fixed-top" role="navigation">
+    <div class="container">
+      <button type="button" class="navbar-header navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+	<span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+       <a class="navbar-brand" href="/">cnLGMing&#39;s Blog</a>
+      <div class="collapse navbar-collapse nav-menu">
+		<ul class="nav navbar-nav">
+		  
+		  <li>
+			<a href="/archives" title="全部文章">
+			  <i class="fa fa-archive"></i>归档
+			</a>
+		  </li>
+		  
+		  <li>
+			<a href="/categories" title="全部分类">
+			  <i class="fa fa-folder"></i>分类
+			</a>
+		  </li>
+		  
+		  <li>
+			<a href="/tags" title="全部标签">
+			  <i class="fa fa-tags"></i>标签
+			</a>
+		  </li>
+		  
+		  <li>
+			<a href="/about" title="关于我">
+			  <i class="fa fa-user"></i>关于我
+			</a>
+		  </li>
+		  
+		</ul>
+      </div>
+    </div> <!-- container -->
+</nav>
+<div class="clearfix"></div>
+
+  <div class="container">
+  	<div class="content">
+    	 
+
+
+	
+		<div class="page-header page-header-inverse ">		
+			<h1 class="title title-inverse "> Android 源码的根目录描述</h1>
+		</div>		
+	
+
+
+
+
+
+
+<div class="row post">
+	<!-- cols -->
+	
+	<div id="top_meta"></div>
+	<div class="col-md-9">
+	
+
+	<!-- content -->
+	<div class="mypage">		
+	  
+		 <div class="alert alert-success description">
+			<i class="fa fa-info-circle"></i> <p>不知不觉，从 Android 应用层转到 Framework 层，已经有接近两个月了。</p>
+			
+		 </div> <!-- alert -->
+	  		
+
+	  <p>简单描述 Android 源码的根目录下各文件夹的功能</p>
+<a id="more"></a>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">根目录名称</th>
+<th style="text-align:left">描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">abi</td>
+<td style="text-align:left">abi 相关代码。abi：Application Binary Interface 的简称，是应用程序二进制接口</td>
+</tr>
+<tr>
+<td style="text-align:center">art</td>
+<td style="text-align:left">Android 5.0 之后的运行环境。注意和 Dalvik VM 区分</td>
+</tr>
+<tr>
+<td style="text-align:center">bionic</td>
+<td style="text-align:left">bionic C 库</td>
+</tr>
+<tr>
+<td style="text-align:center">bootable</td>
+<td style="text-align:left">启动引导相关的代码</td>
+</tr>
+<tr>
+<td style="text-align:center">build</td>
+<td style="text-align:left">存放系统编译规则及 generic 等 基础开发配置包</td>
+</tr>
+<tr>
+<td style="text-align:center">cts</td>
+<td style="text-align:left">Android 兼容性测试套件标准</td>
+</tr>
+<tr>
+<td style="text-align:center">dalvik</td>
+<td style="text-align:left">Dalvik VM</td>
+</tr>
+<tr>
+<td style="text-align:center">development</td>
+<td style="text-align:left">应用程序开发相关</td>
+</tr>
+<tr>
+<td style="text-align:center">device</td>
+<td style="text-align:left">设备相关代码</td>
+</tr>
+<tr>
+<td style="text-align:center">docs</td>
+<td style="text-align:left">介绍开源的相关文档</td>
+</tr>
+<tr>
+<td style="text-align:center">external</td>
+<td style="text-align:left">Android 使用的一些开源的模组</td>
+</tr>
+<tr>
+<td style="text-align:center">framework</td>
+<td style="text-align:left">核心框架 —— Java 及 C++语言，是Android 应用程序的框架</td>
+</tr>
+<tr>
+<td style="text-align:center">gdk</td>
+<td style="text-align:left">即时通信模块</td>
+</tr>
+<tr>
+<td style="text-align:center">hardware</td>
+<td style="text-align:left">主要是硬件适配层 HAL 代码</td>
+</tr>
+<tr>
+<td style="text-align:center">kernel</td>
+<td style="text-align:left">Linux 的内核文件</td>
+</tr>
+<tr>
+<td style="text-align:center">libcore</td>
+<td style="text-align:left">核心库相关</td>
+</tr>
+<tr>
+<td style="text-align:center">libnativehelper</td>
+<td style="text-align:left">是 Support functions for Android’s class libraries 的缩写，表示动态库，是实现的 JNI 库的基础</td>
+</tr>
+<tr>
+<td style="text-align:center">ndk</td>
+<td style="text-align:left">ndk 相关代码</td>
+</tr>
+<tr>
+<td style="text-align:center">out</td>
+<td style="text-align:left">编译完成后的代码输出到此目录</td>
+</tr>
+<tr>
+<td style="text-align:center">package</td>
+<td style="text-align:left">应用程序包</td>
+</tr>
+<tr>
+<td style="text-align:center">pdk</td>
+<td style="text-align:left">Plug Development Kit 的缩写，是本地开发套件</td>
+</tr>
+<tr>
+<td style="text-align:center">prebuilts</td>
+<td style="text-align:left">x86 和 arm 架构下预编译的一些资源文件</td>
+</tr>
+<tr>
+<td style="text-align:center">sdk</td>
+<td style="text-align:left">SDK 及模拟器</td>
+</tr>
+<tr>
+<td style="text-align:center">system</td>
+<td style="text-align:left">文件系统和应用及组件，是用 C 语言实现的</td>
+</tr>
+<tr>
+<td style="text-align:center">tools</td>
+<td style="text-align:left">工具文件夹</td>
+</tr>
+<tr>
+<td style="text-align:center">vender</td>
+<td style="text-align:left">厂商定制代码</td>
+</tr>
+<tr>
+<td style="text-align:center">Makefile</td>
+<td style="text-align:left">全局的 Makefile</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<blockquote>
+<p><strong>作者简介</strong>：</p>
+<p><strong>刘广明</strong>(<a href="http://weibo.com/u/1665380350" target="_blank" rel="external">@cnLGMing</a>)，一步一步往上爬。</p>
+<p><a href="http://www.liuguangmingcn.com/" target="_blank" rel="external">个人博客</a> 、<a href="https://github.com/cnLGMing" target="_blank" rel="external">GitHub</a> </p>
+<p><strong>文章若有不对之处，欢迎指正，谢谢~</strong></p>
+<p><strong>版权声明：原创作品，转载时请务必注明原始出处。</strong></p>
+</blockquote>
+	  
+	</div>
+
+	<div>
+  	<center>
+	<div class="pagination">
+<ul class="pagination">
+	 
+				
+    	<li class="prev"><a href="/2016/10/10/Android-settings-db-添加新字段/" class="alignleft prev"><i class="fa fa-arrow-circle-o-left"></i>上一页</a></li>
+  		
+
+        <li><a href="/archives"><i class="fa fa-archive"></i>Archive</a></li>
+
+		
+		   <li class="next"><a href="/2016/08/21/Android传感器(中)/" class="alignright next">下一页<i class="fa fa-arrow-circle-o-right"></i></a></li>         
+        
+	
+</ul>
+</div>
+
+    </center>
+	</div>
+
+    <!-- share -->
+    
+        
+    <div class="bdsharebuttonbox">
+        <a href="#" class="bds_more" data-cmd="more"></a>
+        <a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信"></a>
+        <a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
+        <a href="#" class="bds_fbook" data-cmd="fbook" title="分享到Facebook"></a>
+        <a href="#" class="bds_twi" data-cmd="twi" title="分享到Twitter"></a>
+        <a href="#" class="bds_linkedin" data-cmd="linkedin" title="分享到linkedin"></a>
+        <a href="#" class="bds_evernotecn" data-cmd="evernotecn" title="分享到印象笔记"></a>
+        <a href="#" class="bds_youdao" data-cmd="youdao" title="分享到有道云笔记"></a>
+        <a href="#" class="bds_copy" data-cmd="copy" title="分享到复制网址"></a>
+    </div>
+    <script>
+        window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"1","bdSize":"24"},"share":{}};
+        with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+    </script>
+
+
+        
+
+    
+	
+	<!-- comment -->
+	
+<section id="comment">
+  <h2 class="title">留言</h2>
+
+  
+  	 <div class="ds-thread" data-thread-key="2016/10/05/Android 源码的根目录简述/" data-title="Android 源码的根目录描述" data-url="http://yoursite.com/2016/10/05/Android 源码的根目录简述/"></div>  
+  
+</section>
+
+	</div> <!-- col-md-9/col-md-12 -->
+		
+	
+	<div id="side_meta">
+		<div class="col-md-3" id="post_meta"> 
+
+	<!-- date -->
+	
+	<div class="meta-widget">
+	<i class="fa fa-clock-o"></i>
+	2016-10-05 
+	</div>
+	
+
+	<!-- categories -->
+    
+	<div class="meta-widget">
+	<a data-toggle="collapse" data-target="#categorys"><i class="fa fa-folder"></i></a>	
+    <ul id="categorys" class="tag_box list-unstyled collapse in">
+          
+  <li>
+    <li><a href="/categories/Android源码/">Android源码<span>2</span></a></li>
+  </li>
+
+    </ul>
+	</div>
+	
+
+	<!-- tags -->
+	
+	<div class="meta-widget">
+	<a data-toggle="collapse" data-target="#tags"><i class="fa fa-tags"></i></a>		  
+    <ul id="tags" class="tag_box list-unstyled collapse in">	  
+	    
+  <li><a href="/tags/源码/">源码<span>1</span></a></li>
+    </ul>
+	</div>
+		
+
+	<!-- toc -->
+	<div class="meta-widget">
+	
+	   <a data-toggle="collapse" data-target="#toc"><i class="fa fa-bars"></i></a>
+	   <div id="toc" class="toc collapse in">
+			
+		</div>
+	
+	</div>
+	
+    <hr>
+	
+</div><!-- col-md-3 -->
+
+	</div>
+		
+
+</div><!-- row -->
+
+<script type="text/javascript">
+  var duoshuoQuery = { short_name: 'cnlgming' };
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';
+    ds.async = true;
+    ds.src = 'http://static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+</script>
+
+
+
+	</div>
+  </div>
+  <div class="container-narrow">
+  <footer> <p>
+  &copy; 2016 刘广明
+  
+      with help from <a href="http://hexo.io/" target="_blank">Hexo</a> and <a href="http://getbootstrap.com/" target="_blank">Twitter Bootstrap</a>. Theme by <a href="http://github.com/wzpan/hexo-theme-freemind/">Freemind</a>.
+     <script 
+     	async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+	</script>
+
+	<span id="busuanzi_container_site_pv">
+    	本站总访问量<span id="busuanzi_value_site_pv"></span>次
+	</span> 
+  
+  <span id="busuanzi_container_page_pv">
+      阅读<span id="busuanzi_value_page_pv"></span>次
+  </span>   
+</p> </footer>
+</div> <!-- container-narrow -->
+  
+
+
+  
+<a id="gotop" href="#">   
+  <span>▲</span> 
+</a>
+
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+<script src="/js/bootstrap.min.js"></script>
+<script src="/js/main.js"></script>
+<script src="/js/search.js"></script> 
+
+
+
+
+   <script type="text/javascript">      
+     var search_path = "search.xml";
+	 if (search_path.length == 0) {
+	 	search_path = "search.xml";
+	 }
+	 var path = "/" + search_path;
+     searchFunc(path, 'local-search-input', 'local-search-result');
+   </script>
+
+</body>
+   </html>
