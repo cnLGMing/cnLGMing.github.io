@@ -4,6 +4,84 @@
   
     
     <entry>
+      <title><![CDATA[Andorid系统启动时执行脚本]]></title>
+      <url>http://yoursite.com/2017/01/13/Andorid%E7%B3%BB%E7%BB%9F%E5%90%AF%E5%8A%A8%E6%97%B6%E6%89%A7%E8%A1%8C%E8%84%9A%E6%9C%AC/</url>
+      <content type="html"><![CDATA[<p>如何在 Android 开机时，执行一个 Shell 脚本。相信你看了本文章后，会有所所获。</p>
+<a id="more"></a>
+<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>这周在做项目时，遇到一个需求：在 Android 开机时，执行一个 Shell 脚本。</p>
+<p>在这里假如：在 Android 开机时，在 <code>data</code> 目录下创建一个名为 <code>cnLGMing</code> 的文件夹。</p>
+<h1 id="分析"><a href="#分析" class="headerlink" title="分析"></a>分析</h1><ol>
+<li><p>在相应的目录新建一个 Shell 脚本文件。在这里假如 Shell 脚本的文件名为：<code>myshll.sh</code>，代码如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">#!/system/bin/sh</div><div class="line">mkdir /data/cnLGMing</div></pre></td></tr></table></figure>
+</li>
+<li><p>需要在 Android 编译时，将这个 Shell 脚本文件复制到相应的目录，并且最终添加到镜像中去</p>
+</li>
+<li><p>需要在 Android 启动时，执行这个 Shell 脚本文件</p>
+</li>
+</ol>
+<p>基本就这样，感觉写起来应该是挺简单的。可在实现的过程中，还是遇到了坑。在这里总结并分享下，最终实现的方法。</p>
+<blockquote>
+<p> 注：因我是开发 <strong>Android TV</strong> ，平台是 <strong>MStar</strong> ，所以以下代码可能跟 Android 原生的有所差异，但思路是一样的，不影响学习！</p>
+</blockquote>
+<h1 id="步骤"><a href="#步骤" class="headerlink" title="步骤"></a>步骤</h1><ol>
+<li><p>在相应的路径新增 Shell 脚本文件。<br>我这边路径的是：<code>device\mstar\pitaya\</code> ，<strong>不同的平台，文件路径也是不同的，请按实际情况。</strong> </p>
+<ul>
+<li><strong>第一个大坑：</strong><br>我是在 Windows 下编写的 Shell 脚本后，复制过去的，在后面烧录镜像后始终不执行。<br>后来排查发现，Shell 脚本出现 <strong>换行时多一个</strong> <code>^M</code> 的换行符问题。解决方法：<ul>
+<li>新增的 Shell 脚本，建议在 Linux 或 Unix 环境下编写。避免出现 <code>^M</code> </li>
+<li>如果在 Windows 下写，换行符需要切换为Unix 格式</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>在编译 Android 系统时，复制到相应的目录，并且最终添加到镜像中去。</p>
+<ul>
+<li><p>我这边的路径是：<code>device\mstar\pitaya\device.mk</code>，找到 <code>PRODUCT_COPY_FILES</code> 此字段，添加代码</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">PRODUCT_COPY_FILES += \</div><div class="line">	device/mstar/pitaya/myshell.sh:system/etc/myshell.sh</div></pre></td></tr></table></figure>
+<p><strong>解释：</strong>原文件路径(根据实际情况写)<code>:</code>目标路径(只需修改你的脚本文件名，即  system/etc/脚本文件名)</p>
+</li>
+</ul>
+</li>
+<li><p>在 Android 启动时，自动执行这个脚本文件。</p>
+<ul>
+<li><p>我这边的路径是：<code>device\mstar\pitaya\init.rc</code>，<strong>不同的平台，文件路径也是不同的，请按实际情况。</strong></p>
+<ul>
+<li><p>在最末尾添加 <code>service</code> ，代码如下：(注意：脚本名称，在烧录镜像后，可通过 <code>start 服务名字</code> 手动执行</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">service myshell system/etc/myshell.sh</div><div class="line">    <span class="keyword">class</span> main</div><div class="line">    user root</div><div class="line">    group root</div><div class="line">    oneshot</div></pre></td></tr></table></figure>
+</li>
+<li><p>在 <code>on init</code> (若没找到，查找下)，末尾加上权限，代码如下：(注意：脚本名称，权限请根据实际情况分配</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">chown root shell /system/etc/myshell.sh</div><div class="line">chmod <span class="number">0550</span> /system/etc/myshell.sh</div></pre></td></tr></table></figure>
+<p>​    当我天真的以为，这样就可以的时候，编译、烧录！结果却是权限不够！好气啊，不是明明写了权限了吗？怎么还是权限不够呢？</p>
+</li>
+</ul>
+</li>
+<li><p><strong>第二个大坑：</strong><br>在跟踪 init.rc 时，发现：<code>system 分区</code> 是以<strong>只读</strong>的形式进行挂载的。那怎么可能会有执行权限嘛！<br>经过 Google 发现：Android 在编译过程中，除了复制文件外，还有一个赋权限的操作。<br>路径：<code>system/core/include/private/android_filesystem_config.h</code></p>
+<ul>
+<li><p>在 fs_path_config android_files[] 数组添加：<br>(注意：脚本名称， <code>00755</code> 权限请根据实际情况分配，根据上下行判断是否需要第4个参数 <code>0</code> </p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">&#123; <span class="number">00755</span>, AID_ROOT,      AID_SHELL,     <span class="number">0</span>, <span class="string">"system/etc/myshell.sh"</span> &#125;,</div></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>编译、烧录、验证。</p>
+</li>
+</ol>
+<hr>
+<hr>
+<hr>
+<p><strong>还有一个问题：</strong>通常调试，会通过查看 log 信息。可是在 Shell 脚本使用 <code>echo</code> 进行信息输出，然而即使脚本成功执行，依然信息依然没有输出。原因不明，若你知道，请留言指教。thx</p>
+<hr>
+<blockquote>
+<p><strong>作者简介</strong>：</p>
+<p><strong>刘广明</strong>(<a href="http://weibo.com/u/1665380350" target="_blank" rel="external">@cnLGMing</a>)，一步一步往上爬。</p>
+<p><a href="http://www.liuguangmingcn.com/" target="_blank" rel="external">个人博客</a> 、<a href="https://github.com/cnLGMing" target="_blank" rel="external">GitHub</a> 、<a href="https://www.zhihu.com/people/LGMing" target="_blank" rel="external">知乎</a></p>
+<p><strong>文章若有不对之处，欢迎指正，谢谢~</strong></p>
+<p><strong>版权声明：原创作品，转载时请务必注明原始出处。</strong></p>
+</blockquote>
+]]></content>
+    </entry>
+    
+    <entry>
       <title><![CDATA[开启Mac原生的读写NTFS功能]]></title>
       <url>http://yoursite.com/2017/01/12/%E5%BC%80%E5%90%AFMac%E5%8E%9F%E7%94%9F%E7%9A%84%E8%AF%BB%E5%86%99NTFS%E5%8A%9F%E8%83%BD/</url>
       <content type="html"><![CDATA[<p>​    换 MacBook Pro 已经有半年多了，始终不习惯 MBP 插入移动硬盘或 U 盘时的操作，不像 Windows 那么简单。为了做到跟 Windows 一样，在 Google 和知乎上面了解了一些相关的知识，现在分享下。</p>

@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   
-  <title>开启Mac原生的读写NTFS功能 | cnLGMing&#39;s Blog</title>
+  <title>Andorid系统启动时执行脚本 | cnLGMing&#39;s Blog</title>
   <meta name="author" content="刘广明">
   
   <meta name="description" content="文章若有不对之处，欢迎指正，谢谢~">
@@ -11,7 +11,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
-  <meta property="og:title" content="开启Mac原生的读写NTFS功能"/>
+  <meta property="og:title" content="Andorid系统启动时执行脚本"/>
   <meta property="og:site_name" content="cnLGMing&#39;s Blog"/>
 
   
@@ -101,7 +101,7 @@ var _hmt = _hmt || [];
 
 	
 		<div class="page-header page-header-inverse ">		
-			<h1 class="title title-inverse "> 开启Mac原生的读写NTFS功能</h1>
+			<h1 class="title title-inverse "> Andorid系统启动时执行脚本</h1>
 		</div>		
 	
 
@@ -126,53 +126,70 @@ var _hmt = _hmt || [];
 		 </div> <!-- alert -->
 	  		
 
-	  <p>​    换 MacBook Pro 已经有半年多了，始终不习惯 MBP 插入移动硬盘或 U 盘时的操作，不像 Windows 那么简单。为了做到跟 Windows 一样，在 Google 和知乎上面了解了一些相关的知识，现在分享下。</p>
+	  <p>如何在 Android 开机时，执行一个 Shell 脚本。相信你看了本文章后，会有所所获。</p>
 <a id="more"></a>
-<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>​    先说明下我自己的情况：</p>
-<ul>
-<li>公司开发用 Windows</li>
-<li>自己开发用 Mac</li>
-<li>一个 Samsung 固态硬盘，用于 Windows 和 Mac （或和同事）之间的数据交换</li>
-<li>一个 Lenovo 机械硬盘，用于备份数据</li>
-</ul>
-<p>​    经常使用移动硬盘进行数据交换和对 Mac 进行备份（买的是乞丐版，最常做的就是备份）。之前一直使用 <a href="http://enjoygineering.com/mounty/" target="_blank" rel="external">Mounty</a> 软件开启 Mac 写 NTFS 的功能，虽然也没有出现知乎上网友说的<code>丢数据</code>的情况，但是始终觉得太麻烦，不喜欢。现在提供一种方法进行开启 Mac 读写 NTFS 功能。亲测可用！</p>
-<p>​    <strong>测试系统：</strong></p>
-<img src="/2017/01/12/开启Mac原生的读写NTFS功能/version.png" alt="版本" title="版本">
-<h1 id="教程"><a href="#教程" class="headerlink" title="教程"></a>教程</h1><ol>
-<li><p>打开 <code>终端</code></p>
+<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>这周在做项目时，遇到一个需求：在 Android 开机时，执行一个 Shell 脚本。</p>
+<p>在这里假如：在 Android 开机时，在 <code>data</code> 目录下创建一个名为 <code>cnLGMing</code> 的文件夹。</p>
+<h1 id="分析"><a href="#分析" class="headerlink" title="分析"></a>分析</h1><ol>
+<li><p>在相应的目录新建一个 Shell 脚本文件。在这里假如 Shell 脚本的文件名为：<code>myshll.sh</code>，代码如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">#!/system/bin/sh</div><div class="line">mkdir /data/cnLGMing</div></pre></td></tr></table></figure>
 </li>
-<li><p>输入<code>sudo nano /etc/fstab</code>，进行更新 /etc/fstab文件</p>
-<ul>
-<li><p>输入自己电脑的密码（没有密码的会跳过去），输入电脑密码后出现以下内容，进行配置：</p>
-<p><code>LABEL=移动硬盘/U盘的名字 none ntfs rw,auto,nobrowse</code></p>
-<img src="/2017/01/12/开启Mac原生的读写NTFS功能/config.png" alt="配置" title="配置">
+<li><p>需要在 Android 编译时，将这个 Shell 脚本文件复制到相应的目录，并且最终添加到镜像中去</p>
 </li>
-<li><p>参数解释：</p>
-<ul>
-<li><code>Samsung</code> 和 <code>Lenovo</code> 是移动硬盘/U盘的名字，建议不要有中文。</li>
-<li>后面的  <code>ntfs rw</code> 表示把这个分区挂载为可读写的 <code>ntfs格式</code>，最后 <code>nobrowse</code> 非常重要，因为这个代表了在 <code>finder</code> 里不显示这个分区，这个选项非常重要，如果不打开的话挂载是不会成功的。</li>
-<li>注意：如果你只有一个，只需添加一个即可，<strong>不能有空行！</strong></li>
-</ul>
-</li>
-</ul>
-</li>
-<li><p>完成后，按 <strong>control + x</strong> 会出现要不要保存的字样，请按 <strong>Y</strong> ，然后回车</p>
-</li>
-<li><p>输入 <code>sudo ln -s /Volumes/移动硬盘或U盘的名字 ~/Desktop/移动硬盘或U盘的名字</code>，创建桌面快捷方式</p>
-<ul>
-<li>因为刚刚创建的分区是不会在 Finder 里不显示的</li>
-<li>如果你想创建多个不一样的，只需要在执行此命令时，设置不同的名字，即可</li>
-</ul>
-</li>
-<li><p>重启电脑</p>
-</li>
-<li><p>插入移动硬盘/U盘，即可。</p>
-</li>
-<li><p>当然，你也可以选择将其拉到 Finder 的侧边栏</p>
-<img src="/2017/01/12/开启Mac原生的读写NTFS功能/move.png" alt="拉" title="拉">
+<li><p>需要在 Android 启动时，执行这个 Shell 脚本文件</p>
 </li>
 </ol>
-<p>​    到此，你就可以像在 Windows 一样操作移动硬盘/U盘了。用这种方式打开的是系统原生的 NTFS 功能，稳定实用，比第三方工具方便多了。</p>
+<p>基本就这样，感觉写起来应该是挺简单的。可在实现的过程中，还是遇到了坑。在这里总结并分享下，最终实现的方法。</p>
+<blockquote>
+<p> 注：因我是开发 <strong>Android TV</strong> ，平台是 <strong>MStar</strong> ，所以以下代码可能跟 Android 原生的有所差异，但思路是一样的，不影响学习！</p>
+</blockquote>
+<h1 id="步骤"><a href="#步骤" class="headerlink" title="步骤"></a>步骤</h1><ol>
+<li><p>在相应的路径新增 Shell 脚本文件。<br>我这边路径的是：<code>device\mstar\pitaya\</code> ，<strong>不同的平台，文件路径也是不同的，请按实际情况。</strong> </p>
+<ul>
+<li><strong>第一个大坑：</strong><br>我是在 Windows 下编写的 Shell 脚本后，复制过去的，在后面烧录镜像后始终不执行。<br>后来排查发现，Shell 脚本出现 <strong>换行时多一个</strong> <code>^M</code> 的换行符问题。解决方法：<ul>
+<li>新增的 Shell 脚本，建议在 Linux 或 Unix 环境下编写。避免出现 <code>^M</code> </li>
+<li>如果在 Windows 下写，换行符需要切换为Unix 格式</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>在编译 Android 系统时，复制到相应的目录，并且最终添加到镜像中去。</p>
+<ul>
+<li><p>我这边的路径是：<code>device\mstar\pitaya\device.mk</code>，找到 <code>PRODUCT_COPY_FILES</code> 此字段，添加代码</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">PRODUCT_COPY_FILES += \</div><div class="line">	device/mstar/pitaya/myshell.sh:system/etc/myshell.sh</div></pre></td></tr></table></figure>
+<p><strong>解释：</strong>原文件路径(根据实际情况写)<code>:</code>目标路径(只需修改你的脚本文件名，即  system/etc/脚本文件名)</p>
+</li>
+</ul>
+</li>
+<li><p>在 Android 启动时，自动执行这个脚本文件。</p>
+<ul>
+<li><p>我这边的路径是：<code>device\mstar\pitaya\init.rc</code>，<strong>不同的平台，文件路径也是不同的，请按实际情况。</strong></p>
+<ul>
+<li><p>在最末尾添加 <code>service</code> ，代码如下：(注意：脚本名称，在烧录镜像后，可通过 <code>start 服务名字</code> 手动执行</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">service myshell system/etc/myshell.sh</div><div class="line">    <span class="keyword">class</span> main</div><div class="line">    user root</div><div class="line">    group root</div><div class="line">    oneshot</div></pre></td></tr></table></figure>
+</li>
+<li><p>在 <code>on init</code> (若没找到，查找下)，末尾加上权限，代码如下：(注意：脚本名称，权限请根据实际情况分配</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">chown root shell /system/etc/myshell.sh</div><div class="line">chmod <span class="number">0550</span> /system/etc/myshell.sh</div></pre></td></tr></table></figure>
+<p>​    当我天真的以为，这样就可以的时候，编译、烧录！结果却是权限不够！好气啊，不是明明写了权限了吗？怎么还是权限不够呢？</p>
+</li>
+</ul>
+</li>
+<li><p><strong>第二个大坑：</strong><br>在跟踪 init.rc 时，发现：<code>system 分区</code> 是以<strong>只读</strong>的形式进行挂载的。那怎么可能会有执行权限嘛！<br>经过 Google 发现：Android 在编译过程中，除了复制文件外，还有一个赋权限的操作。<br>路径：<code>system/core/include/private/android_filesystem_config.h</code></p>
+<ul>
+<li><p>在 fs_path_config android_files[] 数组添加：<br>(注意：脚本名称， <code>00755</code> 权限请根据实际情况分配，根据上下行判断是否需要第4个参数 <code>0</code> </p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">&#123; <span class="number">00755</span>, AID_ROOT,      AID_SHELL,     <span class="number">0</span>, <span class="string">"system/etc/myshell.sh"</span> &#125;,</div></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>编译、烧录、验证。</p>
+</li>
+</ol>
+<hr>
+<hr>
+<hr>
+<p><strong>还有一个问题：</strong>通常调试，会通过查看 log 信息。可是在 Shell 脚本使用 <code>echo</code> 进行信息输出，然而即使脚本成功执行，依然信息依然没有输出。原因不明，若你知道，请留言指教。thx</p>
 <hr>
 <blockquote>
 <p><strong>作者简介</strong>：</p>
@@ -189,14 +206,14 @@ var _hmt = _hmt || [];
 	<div class="pagination">
 <ul class="pagination">
 	 
-				
-    	<li class="prev"><a href="/2017/01/13/Andorid系统启动时执行脚本/" class="alignleft prev"><i class="fa fa-arrow-circle-o-left"></i>上一页</a></li>
-  		
+		
+          <li class="prev disabled"><a><i class="fa fa-arrow-circle-o-left"></i>上一页</a></li>
+        
 
         <li><a href="/archives"><i class="fa fa-archive"></i>Archive</a></li>
 
 		
-		   <li class="next"><a href="/2016/10/10/Android-settings-db-添加新字段/" class="alignright next">下一页<i class="fa fa-arrow-circle-o-right"></i></a></li>         
+		   <li class="next"><a href="/2017/01/12/开启Mac原生的读写NTFS功能/" class="alignright next">下一页<i class="fa fa-arrow-circle-o-right"></i></a></li>         
         
 	
 </ul>
@@ -235,7 +252,7 @@ var _hmt = _hmt || [];
   <h2 class="title">留言</h2>
 
   
-  	 <div class="ds-thread" data-thread-key="2017/01/12/开启Mac原生的读写NTFS功能/" data-title="开启Mac原生的读写NTFS功能" data-url="http://yoursite.com/2017/01/12/开启Mac原生的读写NTFS功能/"></div>  
+  	 <div class="ds-thread" data-thread-key="2017/01/13/Andorid系统启动时执行脚本/" data-title="Andorid系统启动时执行脚本" data-url="http://yoursite.com/2017/01/13/Andorid系统启动时执行脚本/"></div>  
   
 </section>
 
@@ -249,7 +266,7 @@ var _hmt = _hmt || [];
 	
 	<div class="meta-widget">
 	<i class="fa fa-clock-o"></i>
-	2017-01-12 
+	2017-01-13 
 	</div>
 	
 
@@ -260,7 +277,7 @@ var _hmt = _hmt || [];
     <ul id="categorys" class="tag_box list-unstyled collapse in">
           
   <li>
-    <li><a href="/categories/Mac技巧/">Mac技巧<span>1</span></a></li>
+    <li><a href="/categories/Android源码/">Android源码<span>3</span></a></li>
   </li>
 
     </ul>
@@ -273,7 +290,7 @@ var _hmt = _hmt || [];
 	<a data-toggle="collapse" data-target="#tags"><i class="fa fa-tags"></i></a>		  
     <ul id="tags" class="tag_box list-unstyled collapse in">	  
 	    
-  <li><a href="/tags/Mac/">Mac<span>1</span></a></li>
+  <li><a href="/tags/源码/">源码<span>2</span></a></li>
     </ul>
 	</div>
 		
@@ -283,7 +300,7 @@ var _hmt = _hmt || [];
 	
 	   <a data-toggle="collapse" data-target="#toc"><i class="fa fa-bars"></i></a>
 	   <div id="toc" class="toc collapse in">
-			<ol class="toc-article"><li class="toc-article-item toc-article-level-1"><a class="toc-article-link" href="#前言"><span class="toc-article-text">前言</span></a></li><li class="toc-article-item toc-article-level-1"><a class="toc-article-link" href="#教程"><span class="toc-article-text">教程</span></a></li></ol>
+			<ol class="toc-article"><li class="toc-article-item toc-article-level-1"><a class="toc-article-link" href="#前言"><span class="toc-article-text">前言</span></a></li><li class="toc-article-item toc-article-level-1"><a class="toc-article-link" href="#分析"><span class="toc-article-text">分析</span></a></li><li class="toc-article-item toc-article-level-1"><a class="toc-article-link" href="#步骤"><span class="toc-article-text">步骤</span></a></li></ol>
 		</div>
 	
 	</div>
