@@ -1,0 +1,346 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>Android.mk详解 | cnLGMing&#39;s Blog</title>
+  <meta name="author" content="刘广明">
+  
+  <meta name="description" content="前段时间学习了 Android.mk 的编写，然而拖延症犯了，一直拖到现在才总结。文章若有不对之处，欢迎指正，谢谢~">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <meta property="og:title" content="Android.mk详解"/>
+  <meta property="og:site_name" content="cnLGMing&#39;s Blog"/>
+
+  
+    <meta property="og:image" content="undefined"/>
+  
+
+  
+  
+    <link href="/favicon.png" rel="icon">
+  
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="/css/themes/bootstrap.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/font-awesome.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/responsive.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/highlight.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/google-fonts.css" media="screen" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+
+  <script src="/js/jquery-2.0.3.min.js"></script>
+
+  <!-- analytics -->
+  
+
+
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?1d8758dd8ddd40e2535e3c3079a729ac";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+</head>
+
+ <body>  
+  <nav id="main-nav" class="navbar navbar-inverse navbar-default navbar-fixed-top" role="navigation">
+    <div class="container">
+      <button type="button" class="navbar-header navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+	<span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+       <a class="navbar-brand" href="/">cnLGMing&#39;s Blog</a>
+      <div class="collapse navbar-collapse nav-menu">
+		<ul class="nav navbar-nav">
+		  
+		  <li>
+			<a href="/archives" title="全部文章">
+			  <i class="fa fa-archive"></i>归档
+			</a>
+		  </li>
+		  
+		  <li>
+			<a href="/categories" title="全部分类">
+			  <i class="fa fa-folder"></i>分类
+			</a>
+		  </li>
+		  
+		  <li>
+			<a href="/tags" title="全部标签">
+			  <i class="fa fa-tags"></i>标签
+			</a>
+		  </li>
+		  
+		  <li>
+			<a href="/about" title="关于我">
+			  <i class="fa fa-user"></i>关于我
+			</a>
+		  </li>
+		  
+		</ul>
+      </div>
+    </div> <!-- container -->
+</nav>
+<div class="clearfix"></div>
+
+  <div class="container">
+  	<div class="content">
+    	 
+
+
+	
+		<div class="page-header page-header-inverse ">		
+			<h1 class="title title-inverse "> Android.mk详解</h1>
+		</div>		
+	
+
+
+
+
+
+
+<div class="row post">
+	<!-- cols -->
+	
+	<div id="top_meta"></div>
+	<div class="col-md-9">
+	
+
+	<!-- content -->
+	<div class="mypage">		
+	  
+		 <div class="alert alert-success description">
+			<i class="fa fa-info-circle"></i> <p>前段时间学习了 Android.mk 的编写，然而拖延症犯了，一直拖到现在才总结。文章若有不对之处，欢迎指正，谢谢~</p>
+			
+		 </div> <!-- alert -->
+	  		
+
+	  <p>这里借前辈的一句话：</p>
+<blockquote>
+<p>IDE 和 makefile 代表了两种不同的思想：IDE 强调的是简化计算机与用户的交互；而 makefile 体现的是自动化。</p>
+</blockquote>
+<a id="more"></a>
+<h1 id="Android-mk-简介"><a href="#Android-mk-简介" class="headerlink" title="Android.mk 简介"></a>Android.mk 简介</h1><p>​前段时间，在项目中遇到需要编写 Android.mk 文件，所以学习了下如何编写 Android.mk 。下面我们来看看 <code>维基百科</code> 和 <code>百度百科</code> 对其的主要解释。</p>
+<h2 id="维基百科"><a href="#维基百科" class="headerlink" title="维基百科"></a><strong>维基百科</strong></h2><blockquote>
+<p>​    在软件开发中，<strong>make</strong> 是一个工具程序，经由读取叫做 <strong>makefile</strong> 的文件，自动化建构软件。它是一种转化文件形式的工具，转换的目标称为 <strong>target</strong>；与此同时，它也检查文件的依赖关系，如果需要的话，它会调用一些外部软件来完成任务。它的依赖关系检查系统非常简单，主要根据依赖文件的修改时间进行判断。大多数情况下，它被用来编译，生成，然后把结果代码连接起来生成可执行文件或者库文件。它使用叫做 <strong>makefile</strong> 的文件来确定一个 target 文件的依赖关系，然后把生成这个 target 的相关命令传给 <strong>shell</strong> 去执行。</p>
+</blockquote>
+<h2 id="百度百科"><a href="#百度百科" class="headerlink" title="百度百科"></a><strong>百度百科</strong></h2><blockquote>
+<p>​    一个工程中的源文件不计数，其按类型、功能、模块分别放在若干个目录中，makefile 定义了一系列的规则来指定，哪些文件需要先编译，哪些文件需要后编译，哪些文件需要重新编译，甚至于进行更复杂的功能操作，因为 makefile 就像一个 Shell 脚本一样，其中也可以执行操作系统的命令。</p>
+<p>​    makefile 带来的好处就是——“自动化编译”，一旦写好，只需要一个 make 命令，整个工程完全自动编译，极大的提高了软件开发的效率。make 是一个命令工具，是一个解释 makefile 中指令的命令工具，一般来说，大多数的 IDE 都有这个命令，比如：Delphi 的 make，Visual C++ 的 nmake，Linux 下 GNU 的 make。可见，makefile 都成为了一种在工程方面的编译方法。</p>
+<p>​    Make 工具最主要也是最基本的功能就是通过 makefile 文件来描述源程序之间的相互关系并自动维护编译工作。而 makefile 文件需要按照某种语法进行编写，文件中需要说明如何编译各个源文件并连接生成可执行文件，并要求定义源文件之间的依赖关系。makefile 文件是许多编译器–包括 Windows NT 下的编译器–维护编译信息的常用方法，只是在集成开发环境中，用户通过友好的界面修改 makefile 文件而已。</p>
+</blockquote>
+<hr>
+<p>通过上述两个摘要，我们大概能够了解到：Android  使用的是 <code>GNU</code> 的 <code>make</code> ，而 <code>Android.mk</code> 是 makefile 的一小部分，因此 Android.mk 是 GNU 的 makefile 格式。正如上面所说，makefile 很强大的。</p>
+<p>我们开始吧！</p>
+<blockquote>
+<p>注：因我是开发 <strong>Android TV</strong> ，平台是 <strong>MStar</strong> ，所以以下代码可能跟 Android 原生的有所差异，但绝不影响学习！</p>
+</blockquote>
+<h1 id="Android-mk-案例讲解"><a href="#Android-mk-案例讲解" class="headerlink" title="Android.mk 案例讲解"></a>Android.mk 案例讲解</h1><p>这里先讲解一个源码中的 <code>Android.mk</code>，下面是 <code>SystemUI</code> 的 <code>Android.mk</code> 原文件，进行讲解 :</p>
+<p>（注：案例有点长，耐心看完必有收获）</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div></pre></td><td class="code"><pre><div class="line">LOCAL_PATH:= $(call my-dir)</div><div class="line"># Android.mk 文件必须以 LOCAL_PATH 开始。目的是在开发树中查找源文件。</div><div class="line"># 宏my-dir，则由 Build System 提供。返回包含 Android.mk 的目录路径。</div><div class="line"></div><div class="line">include $(CLEAR_VARS)</div><div class="line"># CLEAR_VARS 变量由 Build System 提供。并指定 GNU Makefile 负责清理很多 LOCAL_xxx.</div><div class="line"># 例如：LOCAL_MODULE, LOCAL_SRC_FILES, LOCAL_STATIC_LIBRARIES 等等。但不清理 LOCAL_PATH.</div><div class="line"># 这个清理动作是必须的，因为所有的编译控制文件由同一个 GNU Makefile 解析和执行，其变量是全局的。</div><div class="line"># 所以清理后才能避免相互影响。</div><div class="line"></div><div class="line">LOCAL_MODULE_TAGS := optional</div><div class="line"># 这个值将关系到这个模组是否被编译并放进 system.image</div><div class="line"># optional		指该模块在所有版本下都编译</div><div class="line"># user  		指该模块只在user版本下才编译</div><div class="line"># eng   		指该模块只在eng版本下才编译</div><div class="line"># tests 		指该模块只在tests版本下才编译</div><div class="line"></div><div class="line">LOCAL_SRC_FILES := $(call all-java-files-under, src) \</div><div class="line">    src/com/android/systemui/EventLogTags.logtags</div><div class="line"># 若包含 java 源码时，可以调用 all-java-files-under 得到。(可获得 local_path 目录下的所有java文件)</div><div class="line"># 若涉及 C/C++ 时，必须包含将要编译进模块中的 C/C++ 源文件。不必列出头文件，build System 会自动找出依赖文件。</div><div class="line"># all-java-files-under 宏的定义是在 build/core/definitions.mk 中</div><div class="line">  </div><div class="line">LOCAL_STATIC_JAVA_LIBRARIES := Keyguard</div><div class="line"># APK 程序所需要的静态 jar 包名</div><div class="line"></div><div class="line">LOCAL_JAVA_LIBRARIES := telephony-common \</div><div class="line">                        com.mstar.android</div><div class="line"># 生成的 jar 包名</div><div class="line"></div><div class="line">LOCAL_PACKAGE_NAME := SystemUI</div><div class="line"># 生成的 APK 名和包名，唯一且不能有空格</div><div class="line"></div><div class="line">LOCAL_CERTIFICATE := platform</div><div class="line"># 指定签名文件的文件名，这里表示需要 platform key 签名</div><div class="line"></div><div class="line">LOCAL_PRIVILEGED_MODULE := <span class="literal">true</span></div><div class="line"># 声明 APK 需要放在 /system/priv-app 下</div><div class="line"></div><div class="line">LOCAL_PROGUARD_FLAG_FILES := proguard.flags</div><div class="line"># 指定不需要混淆的 native 方法与变量的 proguard.flags 文件</div><div class="line"># Java的字节码非常容易反编译。为了保护 Java 源代码，通常会对 <span class="keyword">class</span> 文件进行混淆。</div><div class="line"></div><div class="line">LOCAL_RESOURCE_DIR := \</div><div class="line">    frameworks/base/packages/Keyguard/res \</div><div class="line">    $(LOCAL_PATH)/res</div><div class="line"># 指定相应的 res </div><div class="line">  </div><div class="line">LOCAL_AAPT_FLAGS := --<span class="keyword">auto</span>-add-overlay --extra-packages com.android.keyguard</div><div class="line"># 引用包外资源</div><div class="line"></div><div class="line">include $(BUILD_PACKAGE)</div><div class="line"># include $(BUILD_PACKAGE)        表示编译成 APK</div><div class="line"># include $(BUILD_STATIC_LIBRARY) 表示编译成静态库</div><div class="line"># include $(BUILD_SHARED_LIBRARY) 表示编译成动态库</div><div class="line"># include $(BUILD_EXECUTABLE)     表示编译成可执行程序   </div><div class="line">  </div><div class="line">include $(call all-makefiles-under,$(LOCAL_PATH))</div><div class="line"># 加载当前目录下的所有 makefile 文件。</div><div class="line"># all-makefiles-under 会返回一个位于当前 my-dir 路径的子目录中的所有 Android.mk的列表。</div></pre></td></tr></table></figure>
+<p>到此，案例已经解析完。</p>
+<h1 id="编译"><a href="#编译" class="headerlink" title="编译"></a>编译</h1><h2 id="编译成一个-APK（无依赖）"><a href="#编译成一个-APK（无依赖）" class="headerlink" title="编译成一个 APK（无依赖）"></a>编译成一个 APK（无依赖）</h2><figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">LOCAL_PATH := $(call my-dir)</div><div class="line">include $(CLEAR_VARS)</div><div class="line"> </div><div class="line"># Build all java files in the java subdirectory--&gt;直译（建立在java子目录中的所有Java文件）</div><div class="line">LOCAL_SRC_FILES := $(call all-subdir-java-files)</div><div class="line"> </div><div class="line"># Name of the APK to build--&gt;直译（创建APK的名称）</div><div class="line">LOCAL_PACKAGE_NAME := LocalPackage</div><div class="line"> </div><div class="line"># Tell it to build an APK--&gt;直译（告诉它来建立一个APK）</div><div class="line">include $(BUILD_PACKAGE)</div></pre></td></tr></table></figure>
+<h2 id="编译成一个-APK（依赖一个Java-Jar包）"><a href="#编译成一个-APK（依赖一个Java-Jar包）" class="headerlink" title="编译成一个 APK（依赖一个Java Jar包）"></a>编译成一个 APK（依赖一个Java Jar包）</h2><figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div></pre></td><td class="code"><pre><div class="line"># 依赖一个静态Java Jar包</div><div class="line">LOCAL_PATH := $(call my-dir)</div><div class="line">include $(CLEAR_VARS)</div><div class="line"> </div><div class="line"># List of <span class="keyword">static</span> libraries to include in the package,</div><div class="line"># <span class="string">"static-library"</span>为所需要的静态 jar 包名</div><div class="line">LOCAL_STATIC_JAVA_LIBRARIES := <span class="keyword">static</span>-library	</div><div class="line"> </div><div class="line"># Build all java files in the java subdirectory</div><div class="line">LOCAL_SRC_FILES := $(call all-subdir-java-files)</div><div class="line"> </div><div class="line"># Name of the APK to build</div><div class="line">LOCAL_PACKAGE_NAME := LocalPackage</div><div class="line"> </div><div class="line"># Tell it to build an APK</div><div class="line">include $(BUILD_PACKAGE)</div><div class="line">  </div><div class="line"># 依赖一个非静态Java Jar包</div><div class="line">LOCAL_PATH := $(call my-dir)</div><div class="line">include $(CLEAR_VARS)</div><div class="line"> </div><div class="line"># Build all java files in the java subdirectory</div><div class="line">LOCAL_SRC_FILES := $(call all-subdir-java-files)</div><div class="line"> </div><div class="line"># Any libraries that <span class="keyword">this</span> library depends on</div><div class="line"># <span class="string">"android.test.runner"</span>为所需要添加的非静态 Jar 包名</div><div class="line">LOCAL_JAVA_LIBRARIES := android.test.runner</div><div class="line"> </div><div class="line"># The name of the jar file to create</div><div class="line">LOCAL_MODULE := sample</div><div class="line"> </div><div class="line"># Build a <span class="keyword">static</span> jar file.</div><div class="line">include $(BUILD_STATIC_JAVA_LIBRARY)</div></pre></td></tr></table></figure>
+<h2 id="编译成一个需要-key-签名的-APK"><a href="#编译成一个需要-key-签名的-APK" class="headerlink" title="编译成一个需要 key 签名的 APK"></a>编译成一个需要 key 签名的 APK</h2><figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div></pre></td><td class="code"><pre><div class="line"># 需要用平台的key签名的应用程序</div><div class="line">LOCAL_PATH := $(call my-dir)</div><div class="line">include $(CLEAR_VARS)</div><div class="line"> </div><div class="line"># Build all java files in the java subdirectory</div><div class="line">LOCAL_SRC_FILES := $(call all-subdir-java-files)</div><div class="line"> </div><div class="line"># Name of the APK to build</div><div class="line">LOCAL_PACKAGE_NAME := LocalPackage</div><div class="line"> </div><div class="line">LOCAL_CERTIFICATE := platform</div><div class="line"> </div><div class="line"># Tell it to build an APK</div><div class="line">include $(BUILD_PACKAGE)</div><div class="line"></div><div class="line">需要用特定key签名的应用程序</div><div class="line">LOCAL_PATH := $(call my-dir)</div><div class="line">include $(CLEAR_VARS)</div><div class="line"> </div><div class="line"># Build all java files in the java subdirectory</div><div class="line">LOCAL_SRC_FILES := $(call all-subdir-java-files)</div><div class="line"> </div><div class="line"># Name of the APK to build</div><div class="line">LOCAL_PACKAGE_NAME := LocalPackage</div><div class="line"> </div><div class="line">LOCAL_CERTIFICATE := vendor/example/certs/app</div><div class="line"> </div><div class="line"># Tell it to build an APK</div><div class="line">include $(BUILD_PACKAGE)</div></pre></td></tr></table></figure>
+<h2 id="添加一个预编译-APK"><a href="#添加一个预编译-APK" class="headerlink" title="添加一个预编译 APK"></a>添加一个预编译 APK</h2><figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">LOCAL_PATH := $(call my-dir)</div><div class="line">include $(CLEAR_VARS)</div><div class="line"> </div><div class="line"># Module name should match apk name to be installed.</div><div class="line">LOCAL_MODULE := LocalModuleName</div><div class="line">LOCAL_SRC_FILES := $(LOCAL_MODULE).apk</div><div class="line">LOCAL_MODULE_CLASS := APPS</div><div class="line">LOCAL_MODULE_SUFFIX := $(COMMON_ANDROID_PACKAGE_SUFFIX)</div><div class="line"> </div><div class="line">include $(BUILD_PREBUILT)</div></pre></td></tr></table></figure>
+<p>在实践后，已完成 <strong>Android.mk</strong> 的编写。希望通过学习，能够帮助你一点点~</p>
+<p>参考资料：</p>
+<p><a href="http://www.cnblogs.com/hesiming/archive/2011/03/15/1984444.html" target="_blank" rel="external">android编译系统的makefile文件Android.mk写法</a></p>
+<p><a href="http://blog.csdn.net/chief1985/article/details/4699831" target="_blank" rel="external">android makefile(android.mk)分析（序）</a></p>
+<hr>
+<blockquote>
+<p><strong>作者简介</strong>：</p>
+<p><strong>刘广明</strong>(<a href="http://weibo.com/u/1665380350" target="_blank" rel="external">@cnLGMing</a>)，一步一步往上爬。</p>
+<p><a href="http://www.liuguangmingcn.com/" target="_blank" rel="external">个人博客</a> 、<a href="https://github.com/cnLGMing" target="_blank" rel="external">GitHub</a> 、<a href="https://www.zhihu.com/people/LGMing" target="_blank" rel="external">知乎</a></p>
+<p><strong>文章若有不对之处，欢迎指正，谢谢~</strong></p>
+<p><strong>版权声明：原创作品，转载时请务必注明原始出处。</strong></p>
+</blockquote>
+	  
+	</div>
+
+	<div>
+  	<center>
+	<div class="pagination">
+<ul class="pagination">
+	 
+		
+          <li class="prev disabled"><a><i class="fa fa-arrow-circle-o-left"></i>上一页</a></li>
+        
+
+        <li><a href="/archives"><i class="fa fa-archive"></i>Archive</a></li>
+
+		
+		   <li class="next"><a href="/2017/01/13/Andorid系统启动时执行脚本/" class="alignright next">下一页<i class="fa fa-arrow-circle-o-right"></i></a></li>         
+        
+	
+</ul>
+</div>
+
+    </center>
+	</div>
+
+    <!-- share -->
+    
+        
+    <div class="bdsharebuttonbox">
+        <a href="#" class="bds_more" data-cmd="more"></a>
+        <a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信"></a>
+        <a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
+        <a href="#" class="bds_fbook" data-cmd="fbook" title="分享到Facebook"></a>
+        <a href="#" class="bds_twi" data-cmd="twi" title="分享到Twitter"></a>
+        <a href="#" class="bds_linkedin" data-cmd="linkedin" title="分享到linkedin"></a>
+        <a href="#" class="bds_evernotecn" data-cmd="evernotecn" title="分享到印象笔记"></a>
+        <a href="#" class="bds_youdao" data-cmd="youdao" title="分享到有道云笔记"></a>
+        <a href="#" class="bds_copy" data-cmd="copy" title="分享到复制网址"></a>
+    </div>
+    <script>
+        window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"1","bdSize":"24"},"share":{}};
+        with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+    </script>
+
+
+        
+
+    
+	
+	<!-- comment -->
+	
+<section id="comment">
+  <h2 class="title">留言</h2>
+
+  
+  	 <div class="ds-thread" data-thread-key="2017/02/09/浅谈Android.mk/" data-title="Android.mk详解" data-url="http://yoursite.com/2017/02/09/浅谈Android.mk/"></div>  
+  
+</section>
+
+	</div> <!-- col-md-9/col-md-12 -->
+		
+	
+	<div id="side_meta">
+		<div class="col-md-3" id="post_meta"> 
+
+	<!-- date -->
+	
+	<div class="meta-widget">
+	<i class="fa fa-clock-o"></i>
+	2017-02-09 
+	</div>
+	
+
+	<!-- categories -->
+    
+	<div class="meta-widget">
+	<a data-toggle="collapse" data-target="#categorys"><i class="fa fa-folder"></i></a>	
+    <ul id="categorys" class="tag_box list-unstyled collapse in">
+          
+  <li>
+    <li><a href="/categories/Android源码/">Android源码<span>4</span></a></li>
+  </li>
+
+    </ul>
+	</div>
+	
+
+	<!-- tags -->
+	
+	<div class="meta-widget">
+	<a data-toggle="collapse" data-target="#tags"><i class="fa fa-tags"></i></a>		  
+    <ul id="tags" class="tag_box list-unstyled collapse in">	  
+	    
+  <li><a href="/tags/源码/">源码<span>3</span></a></li>
+    </ul>
+	</div>
+		
+
+	<!-- toc -->
+	<div class="meta-widget">
+	
+	   <a data-toggle="collapse" data-target="#toc"><i class="fa fa-bars"></i></a>
+	   <div id="toc" class="toc collapse in">
+			<ol class="toc-article"><li class="toc-article-item toc-article-level-1"><a class="toc-article-link" href="#Android-mk-简介"><span class="toc-article-text">Android.mk 简介</span></a><ol class="toc-article-child"><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#维基百科"><span class="toc-article-text">维基百科</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#百度百科"><span class="toc-article-text">百度百科</span></a></li></ol></li><li class="toc-article-item toc-article-level-1"><a class="toc-article-link" href="#Android-mk-案例讲解"><span class="toc-article-text">Android.mk 案例讲解</span></a></li><li class="toc-article-item toc-article-level-1"><a class="toc-article-link" href="#编译"><span class="toc-article-text">编译</span></a><ol class="toc-article-child"><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#编译成一个-APK（无依赖）"><span class="toc-article-text">编译成一个 APK（无依赖）</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#编译成一个-APK（依赖一个Java-Jar包）"><span class="toc-article-text">编译成一个 APK（依赖一个Java Jar包）</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#编译成一个需要-key-签名的-APK"><span class="toc-article-text">编译成一个需要 key 签名的 APK</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#添加一个预编译-APK"><span class="toc-article-text">添加一个预编译 APK</span></a></li></ol></li></ol>
+		</div>
+	
+	</div>
+	
+    <hr>
+	
+</div><!-- col-md-3 -->
+
+	</div>
+		
+
+</div><!-- row -->
+
+<script type="text/javascript">
+  var duoshuoQuery = { short_name: 'cnlgming' };
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';
+    ds.async = true;
+    ds.src = 'http://static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+</script>
+
+
+
+	</div>
+  </div>
+  <div class="container-narrow">
+  <footer> <p>
+  &copy; 2017 刘广明
+  
+      with help from <a href="http://hexo.io/" target="_blank">Hexo</a> and <a href="http://getbootstrap.com/" target="_blank">Twitter Bootstrap</a>. Theme by <a href="http://github.com/wzpan/hexo-theme-freemind/">Freemind</a>.
+     <script 
+     	async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+	</script>
+
+	<span id="busuanzi_container_site_pv">
+    	本站总访问量<span id="busuanzi_value_site_pv"></span>次
+	</span> 
+  
+  <span id="busuanzi_container_page_pv">
+      阅读<span id="busuanzi_value_page_pv"></span>次
+  </span>   
+</p> </footer>
+</div> <!-- container-narrow -->
+  
+
+
+  
+<a id="gotop" href="#">   
+  <span>▲</span> 
+</a>
+
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+<script src="/js/bootstrap.min.js"></script>
+<script src="/js/main.js"></script>
+<script src="/js/search.js"></script> 
+
+
+
+
+   <script type="text/javascript">      
+     var search_path = "search.xml";
+	 if (search_path.length == 0) {
+	 	search_path = "search.xml";
+	 }
+	 var path = "/" + search_path;
+     searchFunc(path, 'local-search-input', 'local-search-result');
+   </script>
+
+</body>
+   </html>
