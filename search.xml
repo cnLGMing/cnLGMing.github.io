@@ -471,103 +471,6 @@
     </entry>
     
     <entry>
-      <title><![CDATA[面试_04]]></title>
-      <url>http://yoursite.com/2016/08/03/%E9%9D%A2%E8%AF%95-04/</url>
-      <content type="html"><![CDATA[<p>面试 Android 开发工程师<br><a id="more"></a></p>
-<ul>
-<li>公司：深圳市网安计算机安全检测技术有限公司</li>
-<li>职位：Android 开发工程师</li>
-<li>时间：2016/08/03 9:50</li>
-</ul>
-<h1 id="笔试"><a href="#笔试" class="headerlink" title="笔试"></a>笔试</h1><ul>
-<li>Android 中 Service 的实现方法有哪些？</li>
-<li>请说下 final、finally、finalize 的区别？</li>
-<li>抽象类与接口有什么区别？</li>
-<li>请回答一下 HTTP 请求的基本过程</li>
-<li>请问 Java 的反射(reflection)机制是什么？</li>
-<li>Java 中怎样实现多线程？</li>
-<li>请描述下 Activity 的声明周期</li>
-<li>Android 中，请简述 jni 的调用过程</li>
-<li>是否进行过 apk 反编译？如何防止反编译？</li>
-<li>如何设定应用为系统级别的应用？</li>
-<li>如何对通话进行录音？</li>
-<li>如何对操作进行录像？</li>
-</ul>
-<h1 id="面试"><a href="#面试" class="headerlink" title="面试"></a>面试</h1><ul>
-<li>简单自我介绍，以及说下为什么离开上一家公司？</li>
-<li>简述说下，Android 的数据存储类型</li>
-<li>Sharedpreferences 存储于 SQLite 存储有什么区别？</li>
-<li>Handle、Message 和 Loop 有什么关系？</li>
-<li>如何做适配？</li>
-<li>ListView 加载大图片时，如何防止 OOM ？</li>
-<li>HTTP 与 HTTPS 有什么不同？如何选择？</li>
-<li>有没有接触过 H5 和 JS，Android 如何与它们进行配合？</li>
-<li>如何反编译 apk 文件？如果开发者已经进行混淆和加固，还有没有办法反编译？如何做？</li>
-<li>如何进行文件上传？有没有接触过 ftp ？</li>
-<li>一个集合中有相同的元素，怎么去重？</li>
-<li>List、Map、Set 有什么区别？</li>
-<li>在登录账号时，如何保证密码的安全性？</li>
-<li>除了 SQLite，还会哪些数据库？数据库操作熟悉吗？如何删除数据库中，相同名字的数据？用哪个字段？</li>
-</ul>
-<hr>
-<blockquote>
-<p><strong>作者简介</strong>：</p>
-<p><strong>刘广明</strong>(<a href="http://weibo.com/u/1665380350" target="_blank" rel="external">@cnLGMing</a>)，一步一步往上爬。</p>
-<p><a href="http://www.liuguangmingcn.com/" target="_blank" rel="external">个人博客</a> 、<a href="https://github.com/cnLGMing" target="_blank" rel="external">GitHub</a> 、<a href="https://www.zhihu.com/people/LGMing" target="_blank" rel="external">知乎</a></p>
-<p><strong>邮箱：liuguangmingcn@163.com</strong></p>
-<p><strong>文章若有不对之处，欢迎指正，谢谢~</strong></p>
-<p><strong>版权声明：原创作品，转载时请务必注明原始出处。</strong></p>
-</blockquote>
-]]></content>
-    </entry>
-    
-    <entry>
-      <title><![CDATA[面试_03]]></title>
-      <url>http://yoursite.com/2016/07/28/%E9%9D%A2%E8%AF%95-03/</url>
-      <content type="html"><![CDATA[<p>面试 Android 游戏 SDK 开发<br><a id="more"></a></p>
-<ul>
-<li>公司：深圳乐聚互动科技有限公司</li>
-<li>职位：Android SDK 开发工程师</li>
-<li>时间：2016/07/27 11:10</li>
-</ul>
-<h1 id="笔试"><a href="#笔试" class="headerlink" title="笔试"></a>笔试</h1><ul>
-<li>什么是嵌入式实时操作系统？Android 操作系统属于实时操作系统吗？</li>
-<li>描述一下 Android 的系统架构</li>
-<li>Android 的数据存储方式有哪些？</li>
-<li>简述下 ContentProvider 是如何实现数据共享的</li>
-<li>如何讲一个 Activity 设置为窗口样式？</li>
-<li>Android 中常用的五种布局</li>
-<li>简述下 Activity 的生命周期</li>
-<li>简述下 Android 应用程序结构是哪些？</li>
-<li>请继承 SQLiteOpenHelper 实现<ul>
-<li>创建一个版本为 <strong>1</strong> 的 <strong>“diaryOpenHelper.db”</strong> 的数据库</li>
-<li>同时创建一个 <strong>“diary”</strong> 表（包含一个 _id 主键并自增长、topic 字符型100长度、content 字符型100长度）</li>
-<li>在数据库版本变化时，请删除 diary 表，并重新创建 diary 表</li>
-</ul>
-</li>
-</ul>
-<h1 id="面试"><a href="#面试" class="headerlink" title="面试"></a>面试</h1><ul>
-<li>如何处理野指针</li>
-<li>如何进行控制内存以及优化</li>
-<li>支付宝、网银支付丢失订单怎么办</li>
-<li>MySQL 会吗？怎么优化</li>
-<li>没有处理到的异常需要怎么做，才能防止 APP 异常退出</li>
-<li>会算法吗？会哪些？</li>
-<li>有独立开发的能力吗？</li>
-</ul>
-<hr>
-<blockquote>
-<p><strong>作者简介</strong>：</p>
-<p><strong>刘广明</strong>(<a href="http://weibo.com/u/1665380350" target="_blank" rel="external">@cnLGMing</a>)，一步一步往上爬。</p>
-<p><a href="http://www.liuguangmingcn.com/" target="_blank" rel="external">个人博客</a> 、<a href="https://github.com/cnLGMing" target="_blank" rel="external">GitHub</a> 、<a href="https://www.zhihu.com/people/LGMing" target="_blank" rel="external">知乎</a></p>
-<p><strong>邮箱：liuguangmingcn@163.com</strong></p>
-<p><strong>文章若有不对之处，欢迎指正，谢谢~</strong></p>
-<p><strong>版权声明：原创作品，转载时请务必注明原始出处。</strong></p>
-</blockquote>
-]]></content>
-    </entry>
-    
-    <entry>
       <title><![CDATA[[转]写给即将和终将毕业的程序员们]]></title>
       <url>http://yoursite.com/2016/07/26/%E8%BD%AC-%E5%86%99%E7%BB%99%E5%8D%B3%E5%B0%86%E5%92%8C%E7%BB%88%E5%B0%86%E6%AF%95%E4%B8%9A%E7%9A%84%E7%A8%8B%E5%BA%8F%E5%91%98%E4%BB%AC/</url>
       <content type="html"><![CDATA[<p>这篇文章大概需要花费8分钟的时间，看后会有些许的收获。</p>
@@ -1190,6 +1093,103 @@
 <p><strong>作者简介：</strong></p>
 <p><strong>刘广明</strong>(<a href="http://weibo.com/u/1665380350" target="_blank" rel="external">@cnLGMing</a>)，一步一步往上爬。</p>
 <p><a href="http://www.liuguangmingcn.com/" target="_blank" rel="external">个人博客</a> 、<a href="https://github.com/cnLGMing" target="_blank" rel="external">GitHub</a> 、<a href="https://www.zhihu.com/people/LGMing" target="_blank" rel="external">知乎</a></p>
+<p><strong>文章若有不对之处，欢迎指正，谢谢~</strong></p>
+<p><strong>版权声明：原创作品，转载时请务必注明原始出处。</strong></p>
+</blockquote>
+]]></content>
+    </entry>
+    
+    <entry>
+      <title><![CDATA[面试_04]]></title>
+      <url>http://yoursite.com/2016/02/28/%E9%9D%A2%E8%AF%95-04/</url>
+      <content type="html"><![CDATA[<p>面试 Android 开发工程师<br><a id="more"></a></p>
+<ul>
+<li>公司：深圳市网安计算机安全检测技术有限公司</li>
+<li>职位：Android 开发工程师</li>
+<li>时间：2016/02/28 9:50</li>
+</ul>
+<h1 id="笔试"><a href="#笔试" class="headerlink" title="笔试"></a>笔试</h1><ul>
+<li>Android 中 Service 的实现方法有哪些？</li>
+<li>请说下 final、finally、finalize 的区别？</li>
+<li>抽象类与接口有什么区别？</li>
+<li>请回答一下 HTTP 请求的基本过程</li>
+<li>请问 Java 的反射(reflection)机制是什么？</li>
+<li>Java 中怎样实现多线程？</li>
+<li>请描述下 Activity 的声明周期</li>
+<li>Android 中，请简述 jni 的调用过程</li>
+<li>是否进行过 apk 反编译？如何防止反编译？</li>
+<li>如何设定应用为系统级别的应用？</li>
+<li>如何对通话进行录音？</li>
+<li>如何对操作进行录像？</li>
+</ul>
+<h1 id="面试"><a href="#面试" class="headerlink" title="面试"></a>面试</h1><ul>
+<li>简单自我介绍，以及说下为什么离开上一家公司？</li>
+<li>简述说下，Android 的数据存储类型</li>
+<li>Sharedpreferences 存储于 SQLite 存储有什么区别？</li>
+<li>Handle、Message 和 Loop 有什么关系？</li>
+<li>如何做适配？</li>
+<li>ListView 加载大图片时，如何防止 OOM ？</li>
+<li>HTTP 与 HTTPS 有什么不同？如何选择？</li>
+<li>有没有接触过 H5 和 JS，Android 如何与它们进行配合？</li>
+<li>如何反编译 apk 文件？如果开发者已经进行混淆和加固，还有没有办法反编译？如何做？</li>
+<li>如何进行文件上传？有没有接触过 ftp ？</li>
+<li>一个集合中有相同的元素，怎么去重？</li>
+<li>List、Map、Set 有什么区别？</li>
+<li>在登录账号时，如何保证密码的安全性？</li>
+<li>除了 SQLite，还会哪些数据库？数据库操作熟悉吗？如何删除数据库中，相同名字的数据？用哪个字段？</li>
+</ul>
+<hr>
+<blockquote>
+<p><strong>作者简介</strong>：</p>
+<p><strong>刘广明</strong>(<a href="http://weibo.com/u/1665380350" target="_blank" rel="external">@cnLGMing</a>)，一步一步往上爬。</p>
+<p><a href="http://www.liuguangmingcn.com/" target="_blank" rel="external">个人博客</a> 、<a href="https://github.com/cnLGMing" target="_blank" rel="external">GitHub</a> 、<a href="https://www.zhihu.com/people/LGMing" target="_blank" rel="external">知乎</a></p>
+<p><strong>邮箱：liuguangmingcn@163.com</strong></p>
+<p><strong>文章若有不对之处，欢迎指正，谢谢~</strong></p>
+<p><strong>版权声明：原创作品，转载时请务必注明原始出处。</strong></p>
+</blockquote>
+]]></content>
+    </entry>
+    
+    <entry>
+      <title><![CDATA[面试_03]]></title>
+      <url>http://yoursite.com/2016/02/27/%E9%9D%A2%E8%AF%95-03/</url>
+      <content type="html"><![CDATA[<p>面试 Android 游戏 SDK 开发<br><a id="more"></a></p>
+<ul>
+<li>公司：深圳乐聚互动科技有限公司</li>
+<li>职位：Android SDK 开发工程师</li>
+<li>时间：2016/02/27 11:10</li>
+</ul>
+<h1 id="笔试"><a href="#笔试" class="headerlink" title="笔试"></a>笔试</h1><ul>
+<li>什么是嵌入式实时操作系统？Android 操作系统属于实时操作系统吗？</li>
+<li>描述一下 Android 的系统架构</li>
+<li>Android 的数据存储方式有哪些？</li>
+<li>简述下 ContentProvider 是如何实现数据共享的</li>
+<li>如何讲一个 Activity 设置为窗口样式？</li>
+<li>Android 中常用的五种布局</li>
+<li>简述下 Activity 的生命周期</li>
+<li>简述下 Android 应用程序结构是哪些？</li>
+<li>请继承 SQLiteOpenHelper 实现<ul>
+<li>创建一个版本为 <strong>1</strong> 的 <strong>“diaryOpenHelper.db”</strong> 的数据库</li>
+<li>同时创建一个 <strong>“diary”</strong> 表（包含一个 _id 主键并自增长、topic 字符型100长度、content 字符型100长度）</li>
+<li>在数据库版本变化时，请删除 diary 表，并重新创建 diary 表</li>
+</ul>
+</li>
+</ul>
+<h1 id="面试"><a href="#面试" class="headerlink" title="面试"></a>面试</h1><ul>
+<li>如何处理野指针</li>
+<li>如何进行控制内存以及优化</li>
+<li>支付宝、网银支付丢失订单怎么办</li>
+<li>MySQL 会吗？怎么优化</li>
+<li>没有处理到的异常需要怎么做，才能防止 APP 异常退出</li>
+<li>会算法吗？会哪些？</li>
+<li>有独立开发的能力吗？</li>
+</ul>
+<hr>
+<blockquote>
+<p><strong>作者简介</strong>：</p>
+<p><strong>刘广明</strong>(<a href="http://weibo.com/u/1665380350" target="_blank" rel="external">@cnLGMing</a>)，一步一步往上爬。</p>
+<p><a href="http://www.liuguangmingcn.com/" target="_blank" rel="external">个人博客</a> 、<a href="https://github.com/cnLGMing" target="_blank" rel="external">GitHub</a> 、<a href="https://www.zhihu.com/people/LGMing" target="_blank" rel="external">知乎</a></p>
+<p><strong>邮箱：liuguangmingcn@163.com</strong></p>
 <p><strong>文章若有不对之处，欢迎指正，谢谢~</strong></p>
 <p><strong>版权声明：原创作品，转载时请务必注明原始出处。</strong></p>
 </blockquote>
