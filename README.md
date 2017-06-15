@@ -1,4 +1,4 @@
-**[cnLGMing's Blog](http://www.liuguangmingcn.com/)**
+**[cnLGMing's Blog](http://www.cnlgming.com/)**
 
 - 学习时遇到的问题及解决方式
 - 记录面试
